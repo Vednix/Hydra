@@ -17,8 +17,7 @@ namespace Hydra
         public static bool isDisposed { get; set; } = false;
         public static void OnHydraInitialize(EventArgs args)
         {
-            Console.WriteLine("Base / OnHydraInitialize => Hey");
-            Config = Config.Read();
+            Config.Read(true);
             Console.WriteLine($"Base / OnHydraInitialize => DebugLevel: {Config.debugLevel}");
         }
     }
