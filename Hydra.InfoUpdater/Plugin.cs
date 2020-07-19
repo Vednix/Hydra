@@ -8,7 +8,7 @@ using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
 
-namespace Hydra.InfoUpdater
+namespace Hydra.Initializer
 {
     [ApiVersion(2, 1)]
     public class Plugin : TerrariaPlugin
@@ -17,7 +17,7 @@ namespace Hydra.InfoUpdater
 
         public override string Name
         {
-            get { return "Hydra Updated"; }
+            get { return "Hydra Initializer"; }
         }
 
         public override string Author
@@ -25,10 +25,10 @@ namespace Hydra.InfoUpdater
             get { return "Vednix"; }
         }
 
-        public override string Description
-        {
-            get { return "Update Hydra"; }
-        }
+        //public override string Description
+        //{
+        //    get { return ""; }
+        //}
 
         public Plugin(Main game) : base(game)
         {
@@ -37,11 +37,7 @@ namespace Hydra.InfoUpdater
         internal static bool Wait = false;
         public override void Initialize()
         {
-            //ServerApi.Hooks.GamePostInitialize.Register(this, PostInitialize);
-            //ServerApi.Hooks.ServerJoin.Register(this, OnJoin);
             ServerApi.Hooks.NetGetData.Register(this, NetHooks_GetData);
-            //TerrariaApi.Server.SendDataEventArgs
-            //ServerApi.Hooks.NetGetData.Register(this, HandleItemOwner);
         }
 
         private void NetHooks_GetData(GetDataEventArgs e)

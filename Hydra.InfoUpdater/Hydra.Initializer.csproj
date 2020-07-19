@@ -7,8 +7,8 @@
     <ProjectGuid>{5BC356BA-2240-43E2-A29B-FC042538D667}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hydra.InfoUpdater</RootNamespace>
-    <AssemblyName>Hydra.InfoUpdater</AssemblyName>
+    <RootNamespace>Hydra.Initializer</RootNamespace>
+    <AssemblyName>Hydra.Initializer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
