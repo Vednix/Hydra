@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra", "Hydra\Hydra.csproj", "{C8AECA9A-8657-48CD-A9CB-775451BF6A16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Initializer", "Hydra.InfoUpdater\Hydra.Initializer.csproj", "{5BC356BA-2240-43E2-A29B-FC042538D667}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Initializer", "Hydra.Initializer\Hydra.Initializer.csproj", "{5BC356BA-2240-43E2-A29B-FC042538D667}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
