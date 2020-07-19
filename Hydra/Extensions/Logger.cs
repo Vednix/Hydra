@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hydra.Extensions
 {
-    class Logger
+    public class Logger
     {
     }
 }

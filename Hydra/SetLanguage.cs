@@ -26,7 +26,7 @@ namespace Hydra
             player.Country = player.Country == "??" ? (GetUserCountryByIp(player.IP) == "N/A" ? "N/A" : CachedCountry) : player.Country;
             if (player.IP.StartsWith("192.") || player.IP.StartsWith("10.0") || player.IP == "127.0.0.1")
             {
-                TSPlayerB.PlayerLanguage[player.Index] = (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Config.DefaultLanguage);
+                TSPlayerB.PlayerLanguage[player.Index] = (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage);
                 player.Country = "Localhost";
             }
             else
@@ -40,7 +40,7 @@ namespace Hydra
                 else
                     try
                     {
-                        TSPlayerB.PlayerLanguage[player.Index] = (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Config.DefaultLanguage);
+                        TSPlayerB.PlayerLanguage[player.Index] = (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage);
                     }
                     catch (ArgumentException ex)
                     {
@@ -48,10 +48,10 @@ namespace Hydra
                         TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
                     }
             }
-            if (Config.ForceDefaultLanguage)
+            if (Base.Config.ForceDefaultLanguage)
                 try
                 {
-                    TSPlayerB.PlayerLanguage[player.Index] = (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Config.DefaultLanguage);
+                    TSPlayerB.PlayerLanguage[player.Index] = (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage);
                 }
                 catch (ArgumentException ex)
                 {

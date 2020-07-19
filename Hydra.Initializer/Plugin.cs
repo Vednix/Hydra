@@ -1,19 +1,13 @@
-﻿using Hydra.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using Terraria;
 using TerrariaApi.Server;
-using TShockAPI;
 
 namespace Hydra.Initializer
 {
     [ApiVersion(2, 1)]
     public class Plugin : TerrariaPlugin
     {
-        public override Version Version => new Version(1, 0, 1, 0);
+        public override Version Version => Base.Version;
 
         public override string Name
         {
@@ -25,11 +19,6 @@ namespace Hydra.Initializer
             get { return "Vednix"; }
         }
 
-        //public override string Description
-        //{
-        //    get { return ""; }
-        //}
-
         public Plugin(Main game) : base(game)
         {
             Order = 0;
@@ -39,6 +28,7 @@ namespace Hydra.Initializer
         {
             ServerApi.Hooks.NetGetData.Register(this, NetHooks.GetData);
             ServerApi.Hooks.ServerJoin.Register(this, SetLanguage.OnJoin);
+            ServerApi.Hooks.GameInitialize.Register(this, Base.OnHydraInitialize);
         }
         protected override void Dispose(bool disposing)
         {
@@ -46,6 +36,7 @@ namespace Hydra.Initializer
             {
                 ServerApi.Hooks.NetGetData.Deregister(this, NetHooks.GetData);
                 ServerApi.Hooks.ServerJoin.Deregister(this, SetLanguage.OnJoin);
+                ServerApi.Hooks.GameInitialize.Deregister(this, Base.OnHydraInitialize);
                 Base.isDisposed = true;
             }
             base.Dispose(disposing);

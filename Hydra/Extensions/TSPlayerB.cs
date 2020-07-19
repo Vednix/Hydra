@@ -34,7 +34,7 @@ namespace Hydra.Extensions
         }
         public static void SendWarningMessage(int index, string DefaultMessage, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
-            if (Config.MultiLanguageSupport)
+            if (Base.Config.MultiLanguageSupport)
                 switch (PlayerLanguage[index])
                 {
                     case Language.Portuguese:
@@ -44,7 +44,7 @@ namespace Hydra.Extensions
                         DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
                         break;
                     case Language.English:
-                        DefaultMessage = EnglishMessageIfNotDefault;
+                        DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
                         break;
                     default:
                         //Thrown NotImplementedException?
@@ -54,7 +54,7 @@ namespace Hydra.Extensions
         }
         public static void SendErrorMessage(int index, string DefaultMessage, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
-            if (Config.MultiLanguageSupport)
+            if (Base.Config.MultiLanguageSupport)
                 switch (PlayerLanguage[index])
                 {
                     case Language.Portuguese:
@@ -64,7 +64,7 @@ namespace Hydra.Extensions
                         DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
                         break;
                     case Language.English:
-                        DefaultMessage = EnglishMessageIfNotDefault;
+                        DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
                         break;
                     default:
                         //Thrown NotImplementedException?
@@ -74,7 +74,7 @@ namespace Hydra.Extensions
         }
         public static void SendSuccessMessage(int index, string DefaultMessage, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
-            if (Config.MultiLanguageSupport)
+            if (Base.Config.MultiLanguageSupport)
                 switch (PlayerLanguage[index])
                 {
                     case Language.Portuguese:
@@ -84,7 +84,7 @@ namespace Hydra.Extensions
                         DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
                         break;
                     case Language.English:
-                        DefaultMessage = EnglishMessageIfNotDefault;
+                        DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
                         break;
                     default:
                         //Thrown NotImplementedException?
@@ -94,7 +94,7 @@ namespace Hydra.Extensions
         }
         public static void SendMessage(int index, string DefaultMessage, Color color, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
-            if (Config.MultiLanguageSupport)
+            if (Base.Config.MultiLanguageSupport)
                 switch (PlayerLanguage[index])
                 {
                     case Language.Portuguese:
@@ -104,7 +104,7 @@ namespace Hydra.Extensions
                         DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
                         break;
                     case Language.English:
-                        DefaultMessage = EnglishMessageIfNotDefault;
+                        DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
                         break;
                     default:
                         //Thrown NotImplementedException?
