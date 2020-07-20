@@ -137,11 +137,9 @@ namespace Hydra
                                            PortugueseMessage: $"{playername} entrou no servidor.",
                                            SpanishMessage: $"{playername} entró al servidor.", ignore: tsplr);
 
-                    Logger.doLog($"{tsplr.Name} has left the server.", Config.DebugLevel.Info);
-                    //sendMessageDC(message: $"`{tsplr.Name}` saiu do servidor.", channel: "chat", color: DCColor(Color.Yellow), icon: "cute-terraria-icon", logversion: 1);
-
                 }
-                //Log.Info("{0} desconectou.", tsplr.Name);
+
+                Logger.doLog($"{tsplr.Name} has left the server.", Config.DebugLevel.Info);
 
                 if (tsplr.IsLoggedIn && !tsplr.IgnoreActionsForClearingTrashCan && Main.ServerSideCharacter && (!tsplr.Dead || tsplr.TPlayer.difficulty != 2))
                 {
