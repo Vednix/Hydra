@@ -16,8 +16,3 @@ C:\Users\fabio\source\repos\Hydra\Hydra.Initializer\obj\Release\Hydra.Initialize
 C:\Users\fabio\source\repos\Hydra\Hydra.Initializer\obj\Release\Hydra.Initializer.csproj.CopyComplete
 C:\Users\fabio\source\repos\Hydra\Hydra.Initializer\obj\Release\Hydra.Initializer.dll
 C:\Users\fabio\source\repos\Hydra\Hydra.Initializer\obj\Release\Hydra.Initializer.pdb
-C:\Users\fabio\source\repos\Hydra\Hydra.Initializer\bin\Release\TShockAPI.dll
-C:\Users\fabio\source\repos\Hydra\Hydra.Initializer\bin\Release\HttpServer.dll
-C:\Users\fabio\source\repos\Hydra\Hydra.Initializer\bin\Release\MySql.Data.dll
-C:\Users\fabio\source\repos\Hydra\Hydra.Initializer\bin\Release\BCrypt.Net.dll
-C:\Users\fabio\source\repos\Hydra\Hydra.Initializer\bin\Release\Mono.Data.Sqlite.dll

@@ -54,6 +54,7 @@
     </Reference>
     <Reference Include="TShockAPI">
       <HintPath>..\..\..\..\Downloads\testserver\7750\ServerPlugins\TShockAPI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
