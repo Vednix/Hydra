@@ -52,6 +52,9 @@ namespace Hydra
                 return;
             }
 
+            if (Base.Config.ShowHydraMotd)
+                TSPlayerB.SendMessage(player.Index, Base.PrintHydraMotd(TSPlayerB.PlayerLanguage[player.Index]), Color.IndianRed);
+
             string playername = $"[c/4747BF:{player.Name}]";
             if (!Main.player[player.Index].Male)
                 playername = $"[c/800080:{player.Name}]";

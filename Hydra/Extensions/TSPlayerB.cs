@@ -121,6 +121,27 @@ namespace Hydra.Extensions
                 }
             TShockB.Players[index].SendMessage(DefaultMessage, color);
         }
+        public static void SendMessage(int index, string DefaultMessage, byte r, byte g, byte b, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
+        {
+            if (Base.Config.MultiLanguageSupport)
+                switch (PlayerLanguage[index])
+                {
+                    case Language.Portuguese:
+                        DefaultMessage = PortugueseMessage == null ? DefaultMessage : PortugueseMessage;
+                        break;
+                    case Language.Spanish:
+                        DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
+                        break;
+                    case Language.English:
+                        DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
+                        break;
+                    default:
+                        //Thrown NotImplementedException?
+                        break;
+                }
+            Color color = new Color(r, g, b);
+            TShockB.Players[index].SendMessage(DefaultMessage, color);
+        }
 
         /// <summary>
         /// Sends the text of a given file to the player. Replacement of %map% and %players% if in the file.
