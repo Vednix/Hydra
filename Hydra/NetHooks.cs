@@ -131,12 +131,6 @@ namespace Hydra
                         playername = $"[c/800080:{tsplr.Name}]";
                     TShock.AllSendMessagev2($"{playername} saiu do servidor.",
                                             $"{playername} has left the server.", Color.Gray);
-                    TShock.Log.ConsoleInfo($"{playername} saiu do servidor.");
-
-                    TShockB.AllSendMessage(DefaultMessage: $"{playername} has joined the server.", Color.Gray,
-                                           PortugueseMessage: $"{playername} entrou no servidor.",
-                                           SpanishMessage: $"{playername} entró al servidor.", ignore: tsplr);
-
                 }
 
                 Logger.doLog($"{tsplr.Name} has left the server.", Config.DebugLevel.Info);
