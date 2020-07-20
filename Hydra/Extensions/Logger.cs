@@ -73,5 +73,65 @@ namespace Hydra.Extensions
             }
             finally { loglocker.Release(); }
         }
+        public static void doLogLang(string DefaultMessage, Config.DebugLevel level, TSPlayerB.Language language, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
+        {
+            string toLog = "";
+            ConsoleColor color = ConsoleColor.White;
+            switch (language)
+            {
+                case TSPlayerB.Language.English:
+                    DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault; ;
+                    break;
+                case TSPlayerB.Language.Portuguese:
+                    DefaultMessage = PortugueseMessage == null ? DefaultMessage : PortugueseMessage; ;
+                    break;
+                case TSPlayerB.Language.Spanish:
+                    DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage; ;
+                    break;
+                default:
+                    //Pass
+                    break;
+            }
+            switch (level)
+            {
+                case Config.DebugLevel.All:
+                    toLog = $"[{DateTimeNow}] [DEBUG] {DefaultMessage}";
+                    color = ConsoleColor.DarkCyan;
+                    break;
+                case Config.DebugLevel.Info:
+                    toLog = $"[{DateTimeNow}] [INFO] {DefaultMessage}";
+                    color = ConsoleColor.DarkYellow;
+                    break;
+                case Config.DebugLevel.Error:
+                    toLog = $"[{DateTimeNow}] [ERROR] {DefaultMessage}";
+                    color = ConsoleColor.Red;
+                    break;
+                case Config.DebugLevel.Critical:
+                    toLog = $"[{DateTimeNow}] [CRITICAL] {DefaultMessage}";
+                    color = ConsoleColor.DarkRed;
+                    break;
+                case Config.DebugLevel.Unsecure:
+                    toLog = $"[{DateTimeNow}] [UNSECURE] {DefaultMessage}";
+                    color = ConsoleColor.DarkMagenta;
+                    if ((int)level <= (int)Base.Config.debugLevel)
+                        WriteLine(toLog, color);
+                    return;
+            }
+            loglocker.Wait();
+            if (fsLogger is null)
+            {
+                fsLogger = new FileStream(Path.Combine(Base.Config.logPath, $"hydra-{DateTimeNowFile}.log"), FileMode.Append, FileAccess.Write, FileShare.Read);
+                logWriter = new StreamWriter(fsLogger, new UTF8Encoding(false));
+                logWriter.AutoFlush = false;
+            }
+            try
+            {
+                logWriter.WriteLine(toLog);
+                logWriter.Flush();
+                if ((int)level <= (int)Base.Config.debugLevel)
+                    WriteLine(toLog, color);
+            }
+            finally { loglocker.Release(); }
+        }
     }
 }

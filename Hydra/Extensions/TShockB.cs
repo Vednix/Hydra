@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using TerrariaApi.Server;
 using TShockAPI;
 using static Hydra.Extensions.TSPlayerB;
 namespace Hydra.Extensions

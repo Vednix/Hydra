@@ -33,6 +33,7 @@ namespace Hydra.Initializer
             ServerApi.Hooks.NetGreetPlayer.Register(this, NetHooks.OnGreetPlayer);
             ServerApi.Hooks.GameInitialize.Register(this, Base.OnHydraInitialize);
             ServerApi.Hooks.GamePostInitialize.Register(this, Base.OnHydraPostInitialize);
+            ServerApi.Hooks.ServerChat.Register(this, NetHooks.OnChat);
             GeneralHooks.ReloadEvent += Hydra.Config.OnReloadEvent;
         }
         protected override void Dispose(bool disposing)
@@ -45,6 +46,7 @@ namespace Hydra.Initializer
                 ServerApi.Hooks.NetGreetPlayer.Deregister(this, NetHooks.OnGreetPlayer);
                 ServerApi.Hooks.GameInitialize.Deregister(this, Base.OnHydraInitialize);
                 ServerApi.Hooks.GamePostInitialize.Deregister(this, Base.OnHydraPostInitialize);
+                ServerApi.Hooks.ServerChat.Deregister(this, NetHooks.OnChat);
                 GeneralHooks.ReloadEvent -= Hydra.Config.OnReloadEvent;
                 Base.isDisposed = true;
             }

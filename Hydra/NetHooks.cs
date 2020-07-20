@@ -24,6 +24,7 @@ namespace Hydra
                 return;
 
             Logger.doLog(e.MsgID.ToString(), Config.DebugLevel.Unsecure);
+
             switch (e.MsgID)
             {
                 case PacketTypes.ItemOwner:
@@ -41,6 +42,7 @@ namespace Hydra
                     }
             }
         }
+        #region GreetPlayerEventArgs
         public static void OnGreetPlayer(GreetPlayerEventArgs args)
         {
             var player = TShockB.Players[args.Who];
@@ -65,7 +67,9 @@ namespace Hydra
                                        PortugueseMessage: $"{playername}{country} entrou no servidor {via}!",
                                        SpanishMessage: $"{playername}{country} entró al servidor {(via.Contains("(via PC)") ? "[c/ff4500:(a través de PC)]" : "[c/ff198d:(vía teléfono móvil)]")}!", ignore: player);
 
-            Logger.doLog($"{player.Name}{country} has joined the server {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!", Config.DebugLevel.Info);
+            Logger.doLogLang(DefaultMessage: $"{player.Name}{country} has joined the server {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                             PortugueseMessage: $"{player.Name}{country} entrou no servidor {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!",
+                             SpanishMessage: $"{player.Name}{country} entró al servidor {(TSPlayerB.isMobile[player.Index] ? "(vía teléfono móvil)" : "(a través de PC)")}!");
 
             if (TShock.Config.DisplayIPToAdmins)
                 TShock.Utils.SendLogs(string.Format("{0} IP => {1}", player.Name, player.IP), Color.Blue);
@@ -111,6 +115,8 @@ namespace Hydra
 
             args.Handled = true;
         }
+        #endregion
+        #region LeaveEventArgs
         public static void OnLeave(LeaveEventArgs args)
         {
             if (args.Who >= TShockB.Players.Length || args.Who < 0)
@@ -129,11 +135,14 @@ namespace Hydra
                     string playername = $"[c/4747BF:{tsplr.Name}]";
                     if (!tsplr.TPlayer.Male)
                         playername = $"[c/800080:{tsplr.Name}]";
-                    TShock.AllSendMessagev2($"{playername} saiu do servidor.",
-                                            $"{playername} has left the server.", Color.Gray);
+                    TShockB.AllSendMessage(DefaultMessage: $"{playername} has left the server.", Color.White,
+                                           PortugueseMessage: $"{playername} saiu do servidor.",
+                                           SpanishMessage: $"{playername} dejó el servidor.");
                 }
 
-                Logger.doLog($"{tsplr.Name} has left the server.", Config.DebugLevel.Info);
+                Logger.doLogLang(DefaultMessage: $"{tsplr.Name} has left the server.", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                                 PortugueseMessage: $"{tsplr.Name} saiu do servidor.",
+                                 SpanishMessage: $"{tsplr.Name} dejó el servidor.");
 
                 if (tsplr.IsLoggedIn && !tsplr.IgnoreActionsForClearingTrashCan && Main.ServerSideCharacter && (!tsplr.Dead || tsplr.TPlayer.difficulty != 2))
                 {
@@ -166,5 +175,12 @@ namespace Hydra
                 TShockB.SetConsoleTitle(true);
             }
         }
+        #endregion
+        #region ServerChatEventArgs
+        public static void OnChat(ServerChatEventArgs args)
+        {
+
+        }
+        #endregion
     }
 }

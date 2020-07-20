@@ -28,7 +28,7 @@ namespace Hydra
 		public bool MultiLanguageSupport = true;
         public string DefaultLanguage = "English";
 		public bool ForceDefaultLanguage = false;
-		public string logPath { get; set; } = Path.Combine(Base.SavePath, "logs");
+		public string logPath = "logs";
 		public DebugLevel debugLevel =
 #if DEBUG
         (DebugLevel)3;

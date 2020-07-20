@@ -28,7 +28,11 @@ namespace Hydra
                     if (TShockAPI.Commands.ChatCommands[i].Names.Contains(toReplace))
                         TShockAPI.Commands.ChatCommands.Remove(TShockAPI.Commands.ChatCommands[i]);
 
-            TShockAPI.Commands.ChatCommands.Add(new Command(SyncLocalArea, "sync"));
+            TShockAPI.Commands.ChatCommands.Add(new Command(SyncLocalArea, "sync") 
+            { 
+                AllowServer = false,
+                HelpText = "Sends all tiles from the server to the player to resync the client with the actual world state."
+            });
         }
         private static void SyncLocalArea(CommandArgs args)
         {

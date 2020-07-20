@@ -14,7 +14,7 @@ namespace Hydra
 {
     public class Base
     {
-        public static readonly Version Version = new Version(1, 0, 6, 0);
+        public static readonly Version Version = new Version(1, 0, 7, 0);
         public static readonly string SavePath = Path.Combine(TShock.SavePath, "Hydra");
         public static Config Config;
         public static bool isDisposed { get; set; } = false;
@@ -33,6 +33,17 @@ namespace Hydra
         {
             Commands.InitializeCmds(args);
             Logger.WriteLine($"[Hydra] Base / OnHydraPostInitialize => DebugLevel: {Config.debugLevel}", ConsoleColor.DarkCyan);
+        }
+        public static string PrintHydraMotd(TSPlayerB.Language lang)
+        {
+            string HydraMotd = "";
+            switch (lang)
+            {
+                case TSPlayerB.Language.English:
+                    HydraMotd = $"This server is running [c/9b1cc7:Hydra] for TShock";
+                    break;
+            }
+            return "";
         }
     }
 }
