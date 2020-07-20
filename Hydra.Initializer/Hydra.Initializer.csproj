@@ -52,6 +52,9 @@
       <HintPath>..\..\..\..\Downloads\testserver\7750\TerrariaServer.exe</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="TShockAPI">
+      <HintPath>..\..\..\..\Downloads\testserver\7750\ServerPlugins\TShockAPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Plugin.cs" />

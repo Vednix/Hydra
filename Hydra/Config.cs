@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Terraria;
 using TShockAPI;
+using TShockAPI.Hooks;
 
 namespace Hydra
 {
@@ -23,7 +24,8 @@ namespace Hydra
 			Unsecure = 4
 		}
         public static readonly bool isMobileServer = Main.maxPlayers == 16 ? true : false;
-        public bool MultiLanguageSupport = true;
+		public bool EnhanceCommands = true;
+		public bool MultiLanguageSupport = true;
         public string DefaultLanguage = "English";
 		public bool ForceDefaultLanguage = false;
 		public string logPath { get; set; } = Path.Combine(Base.SavePath, "logs");
@@ -35,10 +37,20 @@ namespace Hydra
 #endif
 		public string DateTimeFormat = "dd/MM/yyyy HH:mm:ss";
 		public string DateTimeFormatLogFile = "dd-MM-yyyy--HH-mm-ss";
+		public bool IsDebug =
+#if DEBUG
+		true;
+#else
+		false;
+#endif
 		//public static void Initialize()
 		//{
 		//	Read();
 		//}
+		public static void OnReloadEvent(ReloadEventArgs args)
+        {
+			Read();
+        }
 		public static bool Read(bool FirstLoad = false)
 		{
 			bool Return = false;
@@ -63,7 +75,7 @@ namespace Hydra
 				if (!Directory.Exists(Base.Config.logPath))
 					Directory.CreateDirectory(Base.Config.logPath);
 
-				Logger.doLog("Hydra configuration has been loaded successfully!", DebugLevel.All);
+				Logger.doLog("Hydra configuration has been loaded successfully!", DebugLevel.Info);
 			}
 			catch (Exception e)
 			{

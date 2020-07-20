@@ -53,7 +53,9 @@ namespace Hydra.Extensions
                 case Config.DebugLevel.Unsecure:
                     toLog = $"[{DateTimeNow}] [UNSECURE] {message}";
                     color = ConsoleColor.DarkMagenta;
-                    break;
+                    if ((int)level <= (int)Base.Config.debugLevel)
+                        WriteLine(toLog, color);
+                    return;
             }
             loglocker.Wait();
             if (fsLogger is null)
