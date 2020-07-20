@@ -20,23 +20,7 @@ namespace Hydra.Extensions
         public static Language[] PlayerLanguage { get; set; } = new Language[Main.maxPlayers];
         public static string[] HCountry { get; set; } = new string[Main.maxPlayers];
         public static string[] ClientVersion { get; set; } = new string[Main.maxPlayers];
-        public static bool[] Pinged { get; set; } = new bool[Main.maxPlayers];
-        public static bool[] PingChat { get; set; } = new bool[Main.maxPlayers];
-        public static bool[] PingStatus { get; set; } = new bool[Main.maxPlayers];
-        public static bool[] WarnPingOrange { get; set; } = new bool[Main.maxPlayers];
-        public static bool[] WarnPingRed { get; set; } = new bool[Main.maxPlayers];
-        public static string[] PingedIP { get; set; } = new string[Main.maxPlayers];
         public static bool[] IsDisabledForSSC { get; set; } = new bool[Main.maxPlayers];
-        public static void ResetPingStats(int index)
-        {
-            if (PingedIP[index] == TShockB.Players[index].IP)
-                return;
-            Pinged[index] = false;
-            PingChat[index] = false;
-            PingStatus[index] = false;
-            WarnPingOrange[index] = false;
-            WarnPingRed[index] = false;
-        }
         public static void SendWarningMessage(int index, string DefaultMessage, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
             if (Base.Config.MultiLanguageSupport)

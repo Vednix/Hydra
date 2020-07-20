@@ -44,7 +44,10 @@ namespace Hydra
                     }
                     catch (ArgumentException ex)
                     {
-                        //Log Incorrect Config DefaultLanguage
+                        if (Base.Config.debugLevel <= Config.DebugLevel.Info)
+                            Logger.doLog("Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language", Config.DebugLevel.Info);
+                        else
+                            Logger.doLog($"Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language => Details: {ex}", Config.DebugLevel.Error);
                         TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
                     }
             }
@@ -55,7 +58,10 @@ namespace Hydra
                 }
                 catch (ArgumentException ex)
                 {
-                    //Log Incorrect Config DefaultLanguage
+                    if (Base.Config.debugLevel <= Config.DebugLevel.Info)
+                        Logger.doLog("Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language", Config.DebugLevel.Info);
+                    else
+                        Logger.doLog($"Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language => Details: {ex}", Config.DebugLevel.Error);
                     TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
                 }
             TSPlayerB.HCountry[player.Index] = player.Country;
@@ -69,7 +75,6 @@ namespace Hydra
                 string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
                 ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
                 RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
-                //ipInfo.Country = myRI1.EnglishName;
                 ipInfo.Country = ipInfo.Country == "??" ? "N/A" : ipInfo.Country;
             }
             catch (Exception)
