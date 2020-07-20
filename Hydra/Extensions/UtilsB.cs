@@ -5,13 +5,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using TShockAPI;
 
 namespace Hydra.Extensions
 {
     public class UtilsB
     {
-        public static Utils Utils = TShock.Utils;
+        //public static TShockAPI.Utils Utils = TShock.Utils;
         /// <summary>
         /// Returns an IPv4 address from a DNS query
         /// </summary>
@@ -29,6 +30,15 @@ namespace Hydra.Extensions
             {
             }
             return "";
+        }
+
+        /// <summary>
+        /// Gets the number of active players on the server.
+        /// </summary>
+        /// <returns>The number of active players on the server.</returns>
+        public static int ActivePlayers()
+        {
+            return Main.player.Where(p => null != p && p.active).Count();
         }
     }
 }

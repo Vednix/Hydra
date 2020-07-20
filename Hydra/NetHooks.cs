@@ -159,7 +159,7 @@ namespace Hydra
             }
 
             // The last player will leave after this hook is executed.
-            if (TShock.Utils.ActivePlayers() == 1)
+            if (UtilsB.ActivePlayers() == 1)
             {
                 if (TShock.Config.SaveWorldOnLastPlayerExit)
                     SaveManagerB.Instance.SaveWorld();
