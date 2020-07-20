@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base.cs" />
+    <Compile Include="Commands.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Extensions\Logger.cs" />
     <Compile Include="Extensions\Tools.cs" />

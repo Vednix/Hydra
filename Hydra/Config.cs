@@ -18,9 +18,10 @@ namespace Hydra
         {
 			Critical = 0,
 			Info = 1,
-			Error = 2, 
-			All = 3
-        }
+			Error = 2,
+			All = 3,
+			Unsecure = 4
+		}
         public static readonly bool isMobileServer = Main.maxPlayers == 16 ? true : false;
         public bool MultiLanguageSupport = true;
         public string DefaultLanguage = "English";

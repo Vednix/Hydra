@@ -11,15 +11,16 @@ namespace Hydra
 {
     public class NetHooks
     {
-        public static void GetData(GetDataEventArgs e)
+        public static void OnGetData(GetDataEventArgs e)
         {
-            if (e == null || Hydra.Base.isDisposed || e.Handled)
+            if (e == null || Base.isDisposed || e.Handled)
                 return;
 
             TSPlayer player = TShockB.Players[e.Msg.whoAmI];
             if (player == null)
                 return;
 
+            Logger.doLog(e.MsgID.ToString(), Config.DebugLevel.Unsecure);
             switch (e.MsgID)
             {
                 case PacketTypes.ItemOwner:
@@ -35,6 +36,15 @@ namespace Hydra
                         }
                         break;
                     }
+            }
+        }
+        public static void OnGreetPlayer(GreetPlayerEventArgs args)
+        {
+            var player = TShockB.Players[args.Who];
+            if (player == null)
+            {
+                args.Handled = true;
+                return;
             }
         }
     }
