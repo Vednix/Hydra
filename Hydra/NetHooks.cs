@@ -89,19 +89,20 @@ namespace Hydra
 
             if (!player.IsLoggedIn)
             {
+                string Specifier = TShockAPI.Commands.Specifier;
                 if (Main.ServerSideCharacter)
                 {
                     TSPlayerB.IsDisabledForSSC[player.Index] = true;
-                    TSPlayerB.SendErrorMessage(player.Index, DefaultMessage: String.Format("Server side characters is enabled!\nPlease [c/ffd700:{0}register] or [c/ffd700:{0}login] to play!", TShockAPI.Commands.Specifier),
-                                                             PortugueseMessage: "SSC está ativo neste servidor.\nEfetue [c/ffd700:{TShockAPI.Commands.Specifier}registro] ou [c/ffd700:{TShockAPI.Commands.Specifier}login] para jogar.",
-                                                             SpanishMessage: $"SSC está activo en este servidor.\nInicia [c/ffd700:{TShockAPI.Commands.Specifier}sesión] o [c/ffd700:{TShockAPI.Commands.Specifier}registrarse] para jugar");
+                    TSPlayerB.SendErrorMessage(player.Index, DefaultMessage: $"Server side characters is enabled!\nPlease [c/ffd700:{Specifier}register] or [c/ffd700:{Specifier}login] to play!",
+                                                             PortugueseMessage: $"SSC está ativo neste servidor.\nEfetue [c/ffd700:{Specifier}registro] ou [c/ffd700:{Specifier}login] para jogar.",
+                                                             SpanishMessage: $"SSC está activo en este servidor.\nInicia [c/ffd700:{Specifier}sesión] o [c/ffd700:{Specifier}registrarse] para jugar");
                     player.LoginHarassed = true;
                 }
                 else if (TShock.Config.RequireLogin)
                 {
-                    TSPlayerB.SendErrorMessage(player.Index, DefaultMessage: $"Please [c/ffd700:{TShockAPI.Commands.Specifier}register] or [c/ffd700:{TShockAPI.Commands.Specifier}login] to play!",
-                                                             PortugueseMessage: $"Efetue [c/ffd700:{TShockAPI.Commands.Specifier}registro] ou [c/ffd700:{TShockAPI.Commands.Specifier}login] para jogar.",
-                                                             SpanishMessage: $"Inicia [c/ffd700:{TShockAPI.Commands.Specifier}sesión] o [c/ffd700:{TShockAPI.Commands.Specifier}registrarse] para jugar");
+                    TSPlayerB.SendErrorMessage(player.Index, DefaultMessage: $"Please [c/ffd700:{Specifier}register] or [c/ffd700:{Specifier}login] to play!",
+                                                             PortugueseMessage: $"Efetue [c/ffd700:{Specifier}registro] ou [c/ffd700:{Specifier}login] para jogar.",
+                                                             SpanishMessage: $"Inicia [c/ffd700:{Specifier}sesión] o [c/ffd700:{Specifier}registrarse] para jugar");
                     player.LoginHarassed = true;
                 }
             }
