@@ -100,7 +100,7 @@ namespace Hydra
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Password must be greater than or equal to {TShock.Config.MinimumPasswordLength} characters.",
+                        TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Password must be greater than or equal to [c/FFA500:{TShock.Config.MinimumPasswordLength}] characters.",
                                                                       PortugueseMessage: $"Sua senha deve ter ao menos [c/FFA500:{TShock.Config.MinimumPasswordLength}] caracteres.",
                                                                       SpanishMessage: $"Su contraseña debe tener al menos [c/FFA500:{TShock.Config.MinimumPasswordLength}] caracteres");
                         return;
@@ -116,7 +116,7 @@ namespace Hydra
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Password must be greater than or equal to {TShock.Config.MinimumPasswordLength} characters.",
+                        TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Password must be greater than or equal to [c/FFA500:{TShock.Config.MinimumPasswordLength}] characters.",
                                                                       PortugueseMessage: $"Sua senha deve ter ao menos [c/FFA500:{TShock.Config.MinimumPasswordLength}] caracteres.",
                                                                       SpanishMessage: $"Su contraseña debe tener al menos [c/FFA500:{TShock.Config.MinimumPasswordLength}] caracteres");
                         return;
@@ -192,9 +192,9 @@ namespace Hydra
                     try
                     {
                         TShock.Users.SetUserPassword(args.Player.User, password/*args.Parameters[1]*/); // SetUserPassword will hash it for you.
-                        TSPlayerB.SendSuccessMessage(args.Player.Index, DefaultMessage: $"You changed your password to: [c/ffe70c:{password}",
-                                                                        PortugueseMessage: $"Você alterou sua senha para: [c/ffe70c:{password}",
-                                                                        SpanishMessage: $"Cambiaste tu contraseña a: [c/ffe70c:{password}");
+                        TSPlayerB.SendSuccessMessage(args.Player.Index, DefaultMessage: $"You changed your password to: [c/ffe70c:{password}]",
+                                                                        PortugueseMessage: $"Você alterou sua senha para: [c/ffe70c:{password}]",
+                                                                        SpanishMessage: $"Cambiaste tu contraseña a: [c/ffe70c:{password}]");
 
                         Logger.doLogLang(DefaultMessage: $"{args.Player.Name} ({args.Player.IP}) changed the password of account: {args.Player.User.Name}.", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
                                          PortugueseMessage: $"{args.Player.Name} ({args.Player.IP}) alterou a senha da conta: {args.Player.User.Name}.",
@@ -202,7 +202,7 @@ namespace Hydra
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Password must be greater than or equal to {TShock.Config.MinimumPasswordLength} characters.",
+                        TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Password must be greater than or equal to [c/FFA500:{TShock.Config.MinimumPasswordLength}] characters.",
                                                                       PortugueseMessage: $"Sua senha deve ter ao menos [c/FFA500:{TShock.Config.MinimumPasswordLength}] caracteres.",
                                                                       SpanishMessage: $"Su contraseña debe tener al menos [c/FFA500:{TShock.Config.MinimumPasswordLength}] caracteres");
                     }
