@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Reflection;
 using Terraria;
 using TerrariaApi.Server;
+using TShockAPI;
 using TShockAPI.Hooks;
 
 namespace Hydra.Initializer
@@ -19,10 +21,10 @@ namespace Hydra.Initializer
         {
             get { return "Vednix"; }
         }
-
         public Plugin(Main game) : base(game)
         {
             Order = 0;
+            Base.game = game;
         }
         internal static bool Wait = false;
         public override void Initialize()

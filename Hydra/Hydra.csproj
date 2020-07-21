@@ -67,6 +67,7 @@
     <Compile Include="Extensions\Tools.cs" />
     <Compile Include="Extensions\TSPlayerB.cs" />
     <Compile Include="Extensions\UtilsB.cs" />
+    <Compile Include="GetDataHandlers.cs" />
     <Compile Include="NetHooks.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -14,11 +14,12 @@ namespace Hydra
 {
     public class Base
     {
-        public static readonly Version Version = new Version(1, 0, 8, 1);
+        public static readonly Version Version = new Version(1, 0, 9, 0);
         public static readonly string SavePath = Path.Combine(TShock.SavePath, "Hydra");
         public static Config Config;
         public static bool isDisposed { get; set; } = false;
         public static int ModulesLoaded { get; set; } = 0;
+        public static Main game = new Main();
         public static void OnHydraInitialize(EventArgs args)
         {
             Config.Read(true);

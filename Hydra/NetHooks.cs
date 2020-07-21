@@ -14,6 +14,10 @@ namespace Hydra
 {
     public class NetHooks
     {
+        public static void OnGreetPlayerDS(GreetPlayerEventArgs args)
+        {
+            Console.WriteLine("[Hydra] NetHooks / OnGreetPlayerDS => Try Dispose TShock OnGreet");
+        }
         public static void OnGetData(GetDataEventArgs e)
         {
             if (e == null || Base.isDisposed || e.Handled)
@@ -52,9 +56,6 @@ namespace Hydra
                 return;
             }
 
-            if (Base.Config.ShowHydraMotd)
-                TSPlayerB.SendMessage(player.Index, Base.PrintHydraMotd(TSPlayerB.PlayerLanguage[player.Index]), Color.IndianRed);
-
             string playername = $"[c/4747BF:{player.Name}]";
             if (!Main.player[player.Index].Male)
                 playername = $"[c/800080:{player.Name}]";
@@ -78,6 +79,9 @@ namespace Hydra
                 TShock.Utils.SendLogs(string.Format("{0} IP => {1}", player.Name, player.IP), Color.Blue);
 
             TSPlayerB.SendFileTextAsMessage(player.Index, FileToolsB.MotdPath);
+
+            if (Base.Config.ShowHydraMotd)
+                TSPlayerB.SendMessage(player.Index, Base.PrintHydraMotd(TSPlayerB.PlayerLanguage[player.Index]), Color.IndianRed);
 
             string pvpMode = TShock.Config.PvPMode.ToLowerInvariant();
             if (pvpMode == "always")

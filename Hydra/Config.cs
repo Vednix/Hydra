@@ -29,6 +29,9 @@ namespace Hydra
         public bool MultiLanguageSupport = true;
         public string DefaultLanguage = "English";
         public bool ForceDefaultLanguage = false;
+        public bool SeparateMaleFemaleGroup = false;
+        public string DefaultRegistrationGroupName = TShock.Config.DefaultRegistrationGroupName;
+        public string DefaultRegistrationGroupNameFemale = "choose-default-female";
         public string logPath = "logs";
         public DebugLevel debugLevel =
 #if DEBUG
