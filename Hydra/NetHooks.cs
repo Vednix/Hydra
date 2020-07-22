@@ -71,7 +71,7 @@ namespace Hydra
                                        PortugueseMessage: $"{playername}{country} entrou no servidor {via}!",
                                        SpanishMessage: $"{playername}{country} entró al servidor {(via.Contains("(via PC)") ? "[c/ff4500:(a través de PC)]" : "[c/ff198d:(vía teléfono móvil)]")}!", ignore: player);
 
-            Logger.doLogLang(DefaultMessage: $"{player.Name}{country} has joined the server {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
+            Logger.doLogLang(DefaultMessage: $"{player.Name}{country} has joined the server {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultHydraLanguage),
                              PortugueseMessage: $"{player.Name}{country} entrou no servidor {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!",
                              SpanishMessage: $"{player.Name}{country} entró al servidor {(TSPlayerB.isMobile[player.Index] ? "(vía teléfono móvil)" : "(a través de PC)")}!");
 
