@@ -49,11 +49,17 @@ namespace Hydra
             }
             else
             {
-                if (Base.Config.PortugueseCNCC.Where(p => p.ToLowerInvariant().Contains(player.Country.ToLowerInvariant())).ToString().Count() >= 1)
+                //if (Base.Config.PortugueseCNCC.Where(p => p.ToLowerInvariant().Contains(player.Country.ToLowerInvariant())).ToString().Count() >= 1)
+                //    TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.Portuguese;
+                //else if (Base.Config.EnglishCNCC.Where(p => p.ToLowerInvariant().Contains(player.Country.ToLowerInvariant())).ToString().Count() >= 1)
+                //    TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
+                //else if (Base.Config.SpanishCNCC.Where(p => p.ToLowerInvariant().Contains(player.Country.ToLowerInvariant())).ToString().Count() >= 1)
+                //    TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.Spanish;
+                if (Base.Config.PortugueseCNCC.Contains(player.Country))
                     TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.Portuguese;
-                else if (Base.Config.EnglishCNCC.Where(p => p.ToLowerInvariant().Contains(player.Country.ToLowerInvariant())).ToString().Count() >= 1)
+                else if (Base.Config.EnglishCNCC.Contains(player.Country))
                     TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
-                else if (Base.Config.SpanishCNCC.Where(p => p.ToLowerInvariant().Contains(player.Country.ToLowerInvariant())).ToString().Count() >= 1)
+                else if (Base.Config.SpanishCNCC.Contains(player.Country))
                     TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.Spanish;
                 else
                     try

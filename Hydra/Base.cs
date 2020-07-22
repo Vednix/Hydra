@@ -14,7 +14,7 @@ namespace Hydra
 {
     public class Base
     {
-        public static readonly Version Version = new Version(1, 0, 10, 2);
+        public static readonly Version Version = new Version(1, 0, 10, 3);
         public static readonly string SavePath = Path.Combine(TShock.SavePath, "Hydra");
         public static Config Config;
         public static bool isDisposed { get; set; } = false;

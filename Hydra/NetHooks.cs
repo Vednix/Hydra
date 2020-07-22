@@ -67,9 +67,9 @@ namespace Hydra
             if (country.Contains("N/A") || !TShock.Config.EnableGeoIP)
                 country = string.Empty;
             if (!player.SilentJoinInProgress)
-                TShockB.AllSendMessage(DefaultMessage: $"{playername}{country} has joined the server {via}!", Color.White,
-                                       PortugueseMessage: $"{playername}{country} entrou no servidor {via}!",
-                                       SpanishMessage: $"{playername}{country} entró al servidor {(via.Contains("(via PC)") ? "[c/ff4500:(a través de PC)]" : "[c/ff198d:(vía teléfono móvil)]")}!", ignore: player);
+                TShockB.AllSendMessage(DefaultMessage: $"{playername}{country} has joined the server {via}! [{TSPlayerB.PlayerLanguage[player.Index]}]", Color.White,
+                                       PortugueseMessage: $"{playername}{country} entrou no servidor {via}! [{TSPlayerB.PlayerLanguage[player.Index]}]",
+                                       SpanishMessage: $"{playername}{country} entró al servidor {(via.Contains("(via PC)") ? "[c/ff4500:(a través de PC)]" : "[c/ff198d:(vía teléfono móvil)]")}! [{TSPlayerB.PlayerLanguage[player.Index]}]", ignore: player);
 
             Logger.doLogLang(DefaultMessage: $"{player.Name}{country} has joined the server {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultHydraLanguage),
                              PortugueseMessage: $"{player.Name}{country} entrou no servidor {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!",
