@@ -14,7 +14,7 @@ namespace Hydra
 {
     public class Base
     {
-        public static readonly Version Version = new Version(1, 0, 9, 1);
+        public static readonly Version Version = new Version(1, 0, 10, 1);
         public static readonly string SavePath = Path.Combine(TShock.SavePath, "Hydra");
         public static Config Config;
         public static bool isDisposed { get; set; } = false;
@@ -41,16 +41,16 @@ namespace Hydra
             switch (lang)
             {
                 case TSPlayerB.Language.English:
-                    HydraMotd = $"This server is running [c/9b1cc7:Hydra] for TShock";
+                    HydraMotd = $"This server is running [c/9b1cc7:Hydra (v{Version})] for TShock";
                     break;
                 case TSPlayerB.Language.Portuguese:
-                    HydraMotd = $"Este servidor está executando [c/9b1cc7:Hydra] para TShock";
+                    HydraMotd = $"Este servidor está executando [c/9b1cc7:Hydra (v{Version})] para TShock";
                     break;
                 case TSPlayerB.Language.Spanish:
-                    HydraMotd = $"Este servidor se está ejecutando [c/9b1cc7:Hydra] para TShock";
+                    HydraMotd = $"Este servidor se está ejecutando [c/9b1cc7:Hydra (v{Version})] para TShock";
                     break;
                 default:
-                    HydraMotd = $"This server is running [c/9b1cc7:Hydra] for TShock";
+                    HydraMotd = $"This server is running [c/9b1cc7:Hydra (v{Version})] for TShock";
                     break;
             }
             return HydraMotd;

@@ -71,7 +71,7 @@ namespace Hydra
                                        PortugueseMessage: $"{playername}{country} entrou no servidor {via}!",
                                        SpanishMessage: $"{playername}{country} entró al servidor {(via.Contains("(via PC)") ? "[c/ff4500:(a través de PC)]" : "[c/ff198d:(vía teléfono móvil)]")}!", ignore: player);
 
-            Logger.doLogLang(DefaultMessage: $"{player.Name}{country} has joined the server {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+            Logger.doLogLang(DefaultMessage: $"{player.Name}{country} has joined the server {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
                              PortugueseMessage: $"{player.Name}{country} entrou no servidor {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!",
                              SpanishMessage: $"{player.Name}{country} entró al servidor {(TSPlayerB.isMobile[player.Index] ? "(vía teléfono móvil)" : "(a través de PC)")}!");
 
@@ -143,12 +143,12 @@ namespace Hydra
                     string playername = $"[c/4747BF:{tsplr.Name}]";
                     if (!tsplr.TPlayer.Male)
                         playername = $"[c/800080:{tsplr.Name}]";
-                    TShockB.AllSendMessage(DefaultMessage: $"{playername} has left the server.", Color.White,
+                    TShockB.AllSendMessage(DefaultMessage: $"{playername} has left the server.", Color.DarkGray,
                                            PortugueseMessage: $"{playername} saiu do servidor.",
                                            SpanishMessage: $"{playername} dejó el servidor.");
                 }
 
-                Logger.doLogLang(DefaultMessage: $"{tsplr.Name} has left the server.", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                Logger.doLogLang(DefaultMessage: $"{tsplr.Name} has left the server.", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
                                  PortugueseMessage: $"{tsplr.Name} saiu do servidor.",
                                  SpanishMessage: $"{tsplr.Name} dejó el servidor.");
 

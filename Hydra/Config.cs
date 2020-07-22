@@ -27,8 +27,28 @@ namespace Hydra
         public bool EnhanceCommands = true;
         public bool ShowHydraMotd = true;
         public bool MultiLanguageSupport = true;
-        public string DefaultLanguage = "English";
-        public bool ForceDefaultLanguage = false;
+        public string DefaultHydraLanguage = "English";
+        public string[] PortugueseCNCC =
+        {
+            "Brasil", "BR", "Portugal", "Angola", "Moçambique", "Guiné-Bissau", "Cabo Verde", "São Tomé de Príncipe", "Timor Leste", "PT", "AO", "MZ", "GW", "ST", "CV", "TL"
+        };
+        public string[] SpanishCNCC = // CN: https://caianomundo.ci.com.br/paises-que-falam-espanhol/#:~:text=Os%2020%20pa%C3%ADses%20que%20falam,Rep%C3%BAblica%20Dominicana%2C%20Uruguai%20e%20Venezuela. 
+                                      // CC: http://manualdemarcas.inpi.gov.br/projects/manual-de-marcas-2-edicao-1-revisao/wiki/Siglas_de_pa%C3%ADses_e_organiza%C3%A7%C3%B5es
+        {
+            "Argentina", "AR", "Bolivia", "BO", "Chile", "CL", "Colombia", "CO", "Costa Rica", "CR", "Cuba", "CU", "Dominican Republic", "DO", "Equador", "EC", "El Salvador",
+            "SV", "Guiné Equatorial", "Equatorial Guinea", "GQ", "Guatemala", "GT", "Honduras", "HN", "México", "Mexico", "MX", "Nicarágua", "Nicaragua", "NI", "Panamá", "PA",
+            "Paraguai", "PY", "Peru", "PE", "Espanha", "Spain", "ES", "Uruguai", "UY", "Venezuela", "VE"
+        };
+
+        public string[] EnglishCNCC = // CN: https://pt.wikipedia.org/wiki/Lista_de_pa%C3%ADses_onde_o_ingl%C3%AAs_%C3%A9_a_l%C3%ADngua_oficial
+                                      // CC: http://manualdemarcas.inpi.gov.br/projects/manual-de-marcas-2-edicao-1-revisao/wiki/Siglas_de_pa%C3%ADses_e_organiza%C3%A7%C3%B5es
+        {
+            "United States", "Estados Unidos", "US", "Canada", "Canadá", "CA", "Austrália", "Australia", "AU", "Maurício", "Mauritius", "MU", "New Zealand", "Nova Zelândia",
+            "NZ", "United Kingdom", "Reino Unido", "GB", "Antigua and Barbuda", "AG", "Bahamas", "BS", "Barbados", "BB", "Belize", "BZ", "Dominica", "DM", "Poland", "PL", 
+            "Nigeri", "NG"
+        };
+        public string DefaultPlayerLanguage = "English";
+        public bool ForceDefaultPlayerLanguage = false;
         public bool SeparateMaleFemaleGroup = false;
         public string DefaultRegistrationGroupName = TShock.Config.DefaultRegistrationGroupName;
         public string DefaultRegistrationGroupNameFemale = "choose-default-female";
@@ -100,12 +120,14 @@ namespace Hydra
         {
             try
             {
-                config.DefaultLanguage = Enum.Parse(typeof(TSPlayerB.Language), config.DefaultLanguage).ToString();
+                config.DefaultHydraLanguage = Enum.Parse(typeof(TSPlayerB.Language), config.DefaultHydraLanguage).ToString();
+                config.DefaultPlayerLanguage = Enum.Parse(typeof(TSPlayerB.Language), config.DefaultPlayerLanguage).ToString();
             }
             catch
             {
                 Logger.WriteLine("Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language", ConsoleColor.DarkRed);
-                config.DefaultLanguage = TSPlayerB.Language.English.ToString();
+                config.DefaultHydraLanguage = TSPlayerB.Language.English.ToString();
+                config.DefaultPlayerLanguage = TSPlayerB.Language.English.ToString();
             }
             return config;
         }

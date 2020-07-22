@@ -65,7 +65,6 @@ namespace Hydra
             TShockAPI.Commands.ChatCommands.Add(new Command(TShockAPI.Permissions.canlogout, Logout, "logout", "logoff", "desconectarse", "sair", "desconectar")
             {
                 AllowServer = false,
-                DoLog = false,
                 HelpText = "Logs you out of your current account."
             });
             TShockAPI.Commands.ChatCommands.Add(new Command(TShockAPI.Permissions.canlogin, AttemptLogin, "login")
@@ -74,7 +73,51 @@ namespace Hydra
                 DoLog = false,
                 HelpText = "Logs you into an account."
             });
+            TShockAPI.Commands.ChatCommands.Add(new Command(ChangeLanguage, "lang")
+            {
+                AllowServer = false,
+                DoLog = true
+            });
             #endregion
+        }
+        private static void ChangeLanguage(CommandArgs args)
+        {
+            if (args.Parameters.Count > 0)
+                switch (args.Parameters[0].ToLowerInvariant())
+                {
+                    case "portuguese":
+                    case "portugues":
+                    case "português":
+                    case "portugués":
+                        TSPlayerB.PlayerLanguage[args.Player.Index] = TSPlayerB.Language.Portuguese;
+                        TSPlayerB.SendSuccessMessage(args.Player.Index, DefaultMessage: "Idioma alterado para [c/ffa500:Português] com sucesso!");
+                        return;
+                    case "ingles":
+                    case "nglish":
+                    case "eglish":
+                    case "english":
+                    case "inglés":
+                    case "inglês":
+                        TSPlayerB.PlayerLanguage[args.Player.Index] = TSPlayerB.Language.English;
+                        TSPlayerB.SendSuccessMessage(args.Player.Index, DefaultMessage: "Language successfully changed to [c/ffa500:English]!");
+                        return;
+                    case "espanhol":
+                    case "spanish":
+                    case "espanol":
+                    case "español":
+                        TSPlayerB.PlayerLanguage[args.Player.Index] = TSPlayerB.Language.Spanish;
+                        TSPlayerB.SendSuccessMessage(args.Player.Index, DefaultMessage: "Idioma exitosamente cambiado a [c/ffa500:Español]!");
+                        return; 
+                }
+
+            TSPlayerB.SendMessage(args.Player.Index, DefaultMessage: "Player Language - Commands", Color.Magenta,
+                                                     PortugueseMessage: "Idioma do jogador - Comandos",
+                                                     SpanishMessage: "Idioma del jugador - Comandos");
+
+            TSPlayerB.SendMessage(args.Player.Index, DefaultMessage: "[c/ffd700:/lang English] => Change your language to English", Color.LightGray);
+            TSPlayerB.SendMessage(args.Player.Index, DefaultMessage: "[c/ffd700:/lang Português] => Altera seu idioma para português", Color.LightGray);
+            TSPlayerB.SendMessage(args.Player.Index, DefaultMessage: "[c/ffd700:/lang Español] => Cambia tu idioma a Español", Color.LightGray);
+            //ShowCmds(args);
         }
         private static void SyncLocalArea(CommandArgs args)
         {
@@ -148,13 +191,13 @@ namespace Hydra
                                                              PortugueseMessage: $"Sua senha é [c/ffa500:{echoPassword}], altere-a com [c/ffd700:/senha].",
                                                              SpanishMessage: $"Tu contraseña es [c/ffa500:{echoPassword}], cambiarlo con [c/ffd700:contraseña].");
 
-                    Logger.doLogLang(DefaultMessage: $"{args.Player.Name} registered an account: \"{user.Name}\".", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                    Logger.doLogLang(DefaultMessage: $"{args.Player.Name} registered an account: \"{user.Name}\".", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
                                      PortugueseMessage: $"{args.Player.Name} registrou a conta: \"{user.Name}\".",
                                      SpanishMessage: $"{args.Player.Name} registrado una cuenta: \"{user.Name}\".");
                 }
                 else
                 {
-                    Logger.doLogLang(DefaultMessage: $"{args.Player.Name} failed to register an existing user: \"{user.Name}\".", Config.DebugLevel.Error, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                    Logger.doLogLang(DefaultMessage: $"{args.Player.Name} failed to register an existing user: \"{user.Name}\".", Config.DebugLevel.Error, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
                                      PortugueseMessage: $"{args.Player.Name} falhou ao registrar um usuário já existente: \"{user.Name}\".",
                                      SpanishMessage: $"{args.Player.Name} error al registrar un usuario existente: \"{user.Name}\".");
 
@@ -165,7 +208,7 @@ namespace Hydra
             }
             catch (UserManagerException ex)
             {
-                Logger.doLogLang(DefaultMessage: $"RegisterUser returned an error: {ex}.", Config.DebugLevel.Critical, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                Logger.doLogLang(DefaultMessage: $"RegisterUser returned an error: {ex}.", Config.DebugLevel.Critical, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
                                  PortugueseMessage: $"RegisterUser retornou um erro: {ex}.",
                                  SpanishMessage: $"RegisterUser returned an error: {ex}.");
 
@@ -196,7 +239,7 @@ namespace Hydra
                                                                         PortugueseMessage: $"Você alterou sua senha para: [c/ffe70c:{password}]",
                                                                         SpanishMessage: $"Cambiaste tu contraseña a: [c/ffe70c:{password}]");
 
-                        Logger.doLogLang(DefaultMessage: $"{args.Player.Name} ({args.Player.IP}) changed the password of account: {args.Player.User.Name}.", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                        Logger.doLogLang(DefaultMessage: $"{args.Player.Name} ({args.Player.IP}) changed the password of account: {args.Player.User.Name}.", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
                                          PortugueseMessage: $"{args.Player.Name} ({args.Player.IP}) alterou a senha da conta: {args.Player.User.Name}.",
                                          SpanishMessage: $"{args.Player.Name} ({args.Player.IP}) cambió la contraseña de la cuenta: {args.Player.User.Name}.");
                     }
@@ -227,7 +270,7 @@ namespace Hydra
             }
             catch (UserManagerException ex)
             {
-                Logger.doLogLang(DefaultMessage: $"PasswordUser returned an error: {ex}.", Config.DebugLevel.Critical, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                Logger.doLogLang(DefaultMessage: $"PasswordUser returned an error: {ex}.", Config.DebugLevel.Critical, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
                                  PortugueseMessage: $"PasswordUser retornou um erro: {ex}.",
                                  SpanishMessage: $"PasswordUser returned an error: {ex}.");
 
@@ -262,7 +305,7 @@ namespace Hydra
         {
             if (args.Player.LoginAttempts > TShock.Config.MaximumLoginAttempts && (TShock.Config.MaximumLoginAttempts != -1))
             {
-                Logger.doLogLang(DefaultMessage: String.Format("{0} ({1}) had {2} or more invalid login attempts and was kicked automatically.", args.Player.IP, args.Player.Name, TShock.Config.MaximumLoginAttempts), Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                Logger.doLogLang(DefaultMessage: String.Format("{0} ({1}) had {2} or more invalid login attempts and was kicked automatically.", args.Player.IP, args.Player.Name, TShock.Config.MaximumLoginAttempts), Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
                                  PortugueseMessage: String.Format("{0} ({1}) teve {2} ou mais tentativas de login inválidas e foi expulso automaticamente.", args.Player.IP, args.Player.Name, TShock.Config.MaximumLoginAttempts),
                                  SpanishMessage: String.Format("{0} ({1}) tuvo {2} o más intentos de inicio de sesión no válidos y fue expulsado automáticamente.", args.Player.IP, args.Player.Name, TShock.Config.MaximumLoginAttempts));
 
@@ -373,7 +416,7 @@ namespace Hydra
                                                              PortugueseMessage: $"Autenticado com sucesso ao usuário [c/5472C0:{user.Name}].",
                                                              SpanishMessage: $"Autenticada con éxito a la usuaria [c/5472C0:{user.Name}].");
 
-                    Logger.doLogLang(DefaultMessage: $"'{args.Player.Name}' authenticated successfully as user '{user.Name}'", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                    Logger.doLogLang(DefaultMessage: $"'{args.Player.Name}' authenticated successfully as user '{user.Name}'", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
                                      PortugueseMessage: $"'{args.Player.Name}' autenticou-se com sucesso com o usuário '{user.Name}'",
                                      SpanishMessage: $"'{args.Player.Name}' autenticado exitosamente como usuario '{user.Name}'");
 
@@ -406,7 +449,7 @@ namespace Hydra
                                                                       SpanishMessage: $"Contraseña inválida.");
                     }
 
-                    Logger.doLogLang(DefaultMessage: $"'{args.Player.Name}' failed to authenticate as user: '{user.Name}'", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultLanguage),
+                    Logger.doLogLang(DefaultMessage: $"'{args.Player.Name}' failed to authenticate as user: '{user.Name}'", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
                                      PortugueseMessage: $"'{args.Player.Name}' falhou ao autenticar como o usuário: '{user.Name}'",
                                      SpanishMessage: $"'{args.Player.Name}' no se pudo autenticar como usuario: '{user.Name}'");
                     args.Player.LoginAttempts++;
