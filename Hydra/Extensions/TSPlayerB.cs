@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using TerrariaApi.Server;
 using TShockAPI;
 
 namespace Hydra.Extensions
@@ -21,6 +22,14 @@ namespace Hydra.Extensions
         public static string[] HCountry { get; set; } = new string[Main.maxPlayers];
         public static string[] ClientVersion { get; set; } = new string[Main.maxPlayers];
         public static bool[] IsDisabledForSSC { get; set; } = new bool[Main.maxPlayers];
+        public static void ResetArrayOnLeave(LeaveEventArgs args)
+        {
+            isMobile[args.Who] = false;
+            PlayerLanguage[args.Who] = new Language();
+            HCountry[args.Who] = null;
+            ClientVersion[args.Who] = null;
+            IsDisabledForSSC[args.Who] = false;
+        }
         public static void SendWarningMessage(int index, string DefaultMessage, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
             if (Base.Config.MultiLanguageSupport)

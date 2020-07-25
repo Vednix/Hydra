@@ -11,7 +11,6 @@ namespace Hydra.Initializer
     public class Plugin : TerrariaPlugin
     {
         public override Version Version => Base.Version;
-
         public override string Name
         {
             get { return "Hydra Initializer"; }

@@ -41,8 +41,9 @@ namespace Hydra
                 return;
             }
 
-            player.Country = player.Country == "??" ? (GetUserCountryByIp(player.IP) == "N/A" ? "N/A" : CachedCountry) : player.Country;
-            if (player.IP.StartsWith("192.") || player.IP.StartsWith("10.0") || player.IP == "127.0.0.1")
+            CachedCountry = "_test";
+            player.Country = player.Country == "??" || player.Country == "N/A" ? (GetUserCountryByIp(player.IP) == "N/A" ? "N/A" : CachedCountry) : player.Country;
+            if (player.IP.StartsWith("192.168") || player.IP.StartsWith("10.0") || player.IP == "127.0")
             {
                 TSPlayerB.PlayerLanguage[player.Index] = (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultHydraLanguage);
                 player.Country = "Localhost";
@@ -55,11 +56,11 @@ namespace Hydra
                 //    TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
                 //else if (Base.Config.SpanishCNCC.Where(p => p.ToLowerInvariant().Contains(player.Country.ToLowerInvariant())).ToString().Count() >= 1)
                 //    TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.Spanish;
-                if (Base.Config.PortugueseCNCC.Contains(player.Country))
+                if (Base.Config.PortugueseCNCC.Contains(player.Country.ToLowerInvariant()))
                     TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.Portuguese;
-                else if (Base.Config.EnglishCNCC.Contains(player.Country))
+                else if (Base.Config.EnglishCNCC.Contains(player.Country.ToLowerInvariant()))
                     TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
-                else if (Base.Config.SpanishCNCC.Contains(player.Country))
+                else if (Base.Config.SpanishCNCC.Contains(player.Country.ToLowerInvariant()))
                     TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.Spanish;
                 else
                     try
@@ -89,6 +90,7 @@ namespace Hydra
                     TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
                 }
             TSPlayerB.HCountry[player.Index] = player.Country;
+            Console.WriteLine(TSPlayerB.PlayerLanguage[player.Index]);
         }
         public static string GetUserCountryByIp(string ip)
         {

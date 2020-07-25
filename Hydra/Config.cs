@@ -99,6 +99,10 @@ namespace Hydra
                 if (!Directory.Exists(Base.Config.logPath))
                     Directory.CreateDirectory(Base.Config.logPath);
 
+                Base.Config.PortugueseCNCC = Base.Config.PortugueseCNCC.Select(p => p.ToLowerInvariant()).ToArray();
+                Base.Config.EnglishCNCC = Base.Config.EnglishCNCC.Select(p => p.ToLowerInvariant()).ToArray();
+                Base.Config.SpanishCNCC = Base.Config.SpanishCNCC.Select(p => p.ToLowerInvariant()).ToArray();
+
                 Logger.doLog("Hydra configuration has been loaded successfully!", DebugLevel.Info);
             }
             catch (Exception e)

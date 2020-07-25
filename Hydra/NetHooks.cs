@@ -134,10 +134,12 @@ namespace Hydra
             }
 
             var tsplr = TShockB.Players[args.Who];
-            TShockB.Players[args.Who] = null;
 
             if (tsplr != null && tsplr.ReceivedInfo)
             {
+                TShockB.Players[args.Who] = null;
+                TSPlayerB.ResetArrayOnLeave(args);
+
                 if (!tsplr.SilentKickInProgress && tsplr.State >= 3)
                 {
                     string playername = $"[c/4747BF:{tsplr.Name}]";
@@ -148,7 +150,7 @@ namespace Hydra
                                            SpanishMessage: $"{playername} dejó el servidor.");
                 }
 
-                Logger.doLogLang(DefaultMessage: $"{tsplr.Name} has left the server.", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
+                Logger.doLogLang(DefaultMessage: $"{tsplr.Name} has left the server.", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultHydraLanguage),
                                  PortugueseMessage: $"{tsplr.Name} saiu do servidor.",
                                  SpanishMessage: $"{tsplr.Name} dejó el servidor.");
 

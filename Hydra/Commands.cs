@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Terraria;
 using TShockAPI;
@@ -67,7 +68,7 @@ namespace Hydra
                 AllowServer = false,
                 HelpText = "Logs you out of your current account."
             });
-            TShockAPI.Commands.ChatCommands.Add(new Command(TShockAPI.Permissions.canlogin, AttemptLogin, "login")
+            TShockAPI.Commands.ChatCommands.Add(new Command(TShockAPI.Permissions.canlogin, AttemptLogin, "login", "entrar", "sesion", "sesíon", "logar")
             {
                 AllowServer = false,
                 DoLog = false,
@@ -78,7 +79,41 @@ namespace Hydra
                 AllowServer = false,
                 DoLog = true
             });
+            TShockAPI.Commands.ChatCommands.Add(new Command(SetDefense, "def")
+            {
+                AllowServer = false,
+                DoLog = true
+            });
             #endregion
+        }
+        private static void SetDefense(CommandArgs args)
+        {
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    var item = TShock.Utils.GetItemById(184);
+                    args.Player.GiveItemCheck(item.type, TShockAPI.Localization.EnglishLanguage.GetItemNameById(item.type), 40, 40, 1000, 0);
+                    Thread.Sleep(3000);
+                }
+            });
+            //try
+            //{
+            //    args.Player.TPlayer.statDefense = int.MaxValue;
+            //    args.Player.TPlayer.lifeRegen = int.Parse(args.Parameters[0]);
+            //    args.Player.TPlayer.manaRegen = int.Parse(args.Parameters[0]);
+            //    args.Player.TPlayer.statLifeMax = 500;
+            //    args.Player.TPlayer.statManaMax = 400;
+
+            //    NetMessage.SendData((int)PacketTypes.PlayerHp, -1, -1, "", args.Player.Index, 0f, 0f, 0f, 0);
+            //    NetMessage.SendData((int)PacketTypes.PlayerMana, -1, -1, "", args.Player.Index, 0f, 0f, 0f, 0);
+            //    NetMessage.SendData((int)PacketTypes.PlayerUpdate, -1, -1, "", args.Player.Index, 0f, 0f, 0f, 0);
+            //    NetMessage.SendData((int)PacketTypes.PlayerStealth, -1, -1, "", args.Player.Index, 0f, 0f, 0f, 0);
+            //    NetMessage.SendData((int)PacketTypes.PlayerInfo, -1, -1, "", args.Player.Index, 0f, 0f, 0f, 0);
+            //    NetMessage.SendData((int)PacketTypes.PlayerDodge, -1, -1, "", args.Player.Index, 0f, 0f, 0f, 0);
+            //    NetMessage.SendData((int)PacketTypes.PlayerUpdate, -1, -1, "", args.Player.Index, 0f, 0f, 0f, 0);
+            //}
+            //catch (Exception ex) { Logger.WriteLine(ex.ToString(), ConsoleColor.Red); }
         }
         private static void ChangeLanguage(CommandArgs args)
         {
@@ -107,7 +142,7 @@ namespace Hydra
                     case "español":
                         TSPlayerB.PlayerLanguage[args.Player.Index] = TSPlayerB.Language.Spanish;
                         TSPlayerB.SendSuccessMessage(args.Player.Index, DefaultMessage: "Idioma exitosamente cambiado a [c/ffa500:Español]!");
-                        return; 
+                        return;
                 }
 
             TSPlayerB.SendMessage(args.Player.Index, DefaultMessage: "Player Language - Commands", Color.Magenta,
