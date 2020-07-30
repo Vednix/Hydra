@@ -192,23 +192,23 @@ namespace Hydra
 
                 int cmdIndex = (int)Base.CurrentHydraLanguage;
                 string headerformat = "Command List ({0}/{1}):";
-                string footerformat = $"Digite [c/ffd700:{0}comandos {{0}}] para ver mais.".SFormat(Specifier);
+                string footerformat = "Digite [c/ffd700:{0}comandos {{0}}] para ver mais.".SFormat(Specifier);
                 if (args.Player.Index >= 0)
                     switch (TSPlayerB.PlayerLanguage[args.Player.Index])
                     {
                         case TSPlayerB.Language.English:
                             headerformat = "Command List ({0}/{1}):";
-                            footerformat = $"Type [c/ffd700:{0}help {{0}}] for more.".SFormat(Specifier);
+                            footerformat = "Type [c/ffd700:{0}help {{0}}] for more.".SFormat(Specifier);
                             cmdIndex = 0;
                             break;
                         case TSPlayerB.Language.Portuguese:
                             headerformat = "Lista de Comandos ({0}/{1}):";
-                            footerformat = $"Digite [c/ffd700:{0}comandos {{0}}] para ver mais.".SFormat(Specifier);
+                            footerformat = "Digite [c/ffd700:{0}comandos {{0}}] para ver mais.".SFormat(Specifier);
                             cmdIndex = 1;
                             break;
                         case TSPlayerB.Language.Spanish:
                             headerformat = "Lista de Comandos ({0}/{1}):";
-                            footerformat = $"Escribe [c/ffd700:{0}ayuda {{0}}] para ver más.".SFormat(Specifier);
+                            footerformat = "Escribe [c/ffd700:{0}ayuda {{0}}] para ver más.".SFormat(Specifier);
                             cmdIndex = 2;
                             break;
                     }
@@ -217,15 +217,15 @@ namespace Hydra
                     {
                         case TSPlayerB.Language.English:
                             headerformat = "Command List ({0}/{1}):";
-                            footerformat = $"Type [c/ffd700:{0}help {{0}}] for more.".SFormat(Specifier);
+                            footerformat = "Type [c/ffd700:{0}help {{0}}] for more.".SFormat(Specifier);
                             break;
                         case TSPlayerB.Language.Portuguese:
                             headerformat = "Lista de Comandos ({0}/{1}):";
-                            footerformat = $"Digite [c/ffd700:{0}comandos {{0}}] para ver mais.".SFormat(Specifier);
+                            footerformat = "Digite [c/ffd700:{0}comandos {{0}}] para ver mais.".SFormat(Specifier);
                             break;
                         case TSPlayerB.Language.Spanish:
                             headerformat = "Lista de Comandos ({0}/{1}):";
-                            footerformat = $"Escribe [c/ffd700:{0}ayuda {{0}}] para ver más.".SFormat(Specifier);
+                            footerformat = "Escribe [c/ffd700:{0}ayuda {{0}}] para ver más.".SFormat(Specifier);
                             break;
                     }
 
