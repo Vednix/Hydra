@@ -32,7 +32,7 @@ namespace Hydra.Extensions
         }
         public static void SendWarningMessage(int index, string DefaultMessage, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
-            if (Base.Config.MultiLanguageSupport)
+            if (Base.Config.MultiLanguageSupport && index >= 0)
                 switch (PlayerLanguage[index])
                 {
                     case Language.Portuguese:
@@ -48,11 +48,30 @@ namespace Hydra.Extensions
                         //Thrown NotImplementedException?
                         break;
                 }
-            TShockB.Players[index].SendWarningMessage(DefaultMessage);
+            else
+                switch (Base.CurrentHydraLanguage)
+                {
+                    case Language.Portuguese:
+                        DefaultMessage = PortugueseMessage == null ? DefaultMessage : PortugueseMessage;
+                        break;
+                    case Language.Spanish:
+                        DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
+                        break;
+                    case Language.English:
+                        DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
+                        break;
+                    default:
+                        //Thrown NotImplementedException?
+                        break;
+                }
+            if (index >= 0)
+                TShockB.Players[index].SendWarningMessage(DefaultMessage);
+            else
+                TSPlayer.Server.SendWarningMessage(DefaultMessage);
         }
         public static void SendInfoMessage(int index, string DefaultMessage, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
-            if (Base.Config.MultiLanguageSupport)
+            if (Base.Config.MultiLanguageSupport && index >= 0)
                 switch (PlayerLanguage[index])
                 {
                     case Language.Portuguese:
@@ -68,11 +87,30 @@ namespace Hydra.Extensions
                         //Thrown NotImplementedException?
                         break;
                 }
-            TShockB.Players[index].SendInfoMessage(DefaultMessage);
+            else
+                switch (Base.CurrentHydraLanguage)
+                {
+                    case Language.Portuguese:
+                        DefaultMessage = PortugueseMessage == null ? DefaultMessage : PortugueseMessage;
+                        break;
+                    case Language.Spanish:
+                        DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
+                        break;
+                    case Language.English:
+                        DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
+                        break;
+                    default:
+                        //Thrown NotImplementedException?
+                        break;
+                }
+            if (index >= 0)
+                TShockB.Players[index].SendInfoMessage(DefaultMessage);
+            else
+                TSPlayer.Server.SendInfoMessage(DefaultMessage);
         }
         public static void SendErrorMessage(int index, string DefaultMessage, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
-            if (Base.Config.MultiLanguageSupport)
+            if (Base.Config.MultiLanguageSupport && index >= 0)
                 switch (PlayerLanguage[index])
                 {
                     case Language.Portuguese:
@@ -88,11 +126,30 @@ namespace Hydra.Extensions
                         //Thrown NotImplementedException?
                         break;
                 }
-            TShockB.Players[index].SendErrorMessage(DefaultMessage);
+            else
+                switch (Base.CurrentHydraLanguage)
+                {
+                    case Language.Portuguese:
+                        DefaultMessage = PortugueseMessage == null ? DefaultMessage : PortugueseMessage;
+                        break;
+                    case Language.Spanish:
+                        DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
+                        break;
+                    case Language.English:
+                        DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
+                        break;
+                    default:
+                        //Thrown NotImplementedException?
+                        break;
+                }
+            if (index >= 0)
+                TShockB.Players[index].SendErrorMessage(DefaultMessage);
+            else
+                TSPlayer.Server.SendErrorMessage(DefaultMessage);
         }
         public static void SendSuccessMessage(int index, string DefaultMessage, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
-            if (Base.Config.MultiLanguageSupport)
+            if (Base.Config.MultiLanguageSupport && index >= 0)
                 switch (PlayerLanguage[index])
                 {
                     case Language.Portuguese:
@@ -108,11 +165,30 @@ namespace Hydra.Extensions
                         //Thrown NotImplementedException?
                         break;
                 }
-            TShockB.Players[index].SendSuccessMessage(DefaultMessage);
+            else
+                switch (Base.CurrentHydraLanguage)
+                {
+                    case Language.Portuguese:
+                        DefaultMessage = PortugueseMessage == null ? DefaultMessage : PortugueseMessage;
+                        break;
+                    case Language.Spanish:
+                        DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
+                        break;
+                    case Language.English:
+                        DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
+                        break;
+                    default:
+                        //Thrown NotImplementedException?
+                        break;
+                }
+            if (index >= 0)
+                TShockB.Players[index].SendSuccessMessage(DefaultMessage);
+            else
+                TSPlayer.Server.SendSuccessMessage(DefaultMessage);
         }
         public static void SendMessage(int index, string DefaultMessage, Color color, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
-            if (Base.Config.MultiLanguageSupport)
+            if (Base.Config.MultiLanguageSupport && index >= 0)
                 switch (PlayerLanguage[index])
                 {
                     case Language.Portuguese:
@@ -128,13 +204,32 @@ namespace Hydra.Extensions
                         //Thrown NotImplementedException?
                         break;
                 }
-            TShockB.Players[index].SendMessage(DefaultMessage, color);
+            else
+                switch (Base.CurrentHydraLanguage)
+                {
+                    case Language.Portuguese:
+                        DefaultMessage = PortugueseMessage == null ? DefaultMessage : PortugueseMessage;
+                        break;
+                    case Language.Spanish:
+                        DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
+                        break;
+                    case Language.English:
+                        DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
+                        break;
+                    default:
+                        //Thrown NotImplementedException?
+                        break;
+                }
+            if (index >= 0)
+                TShockB.Players[index].SendMessage(DefaultMessage, color);
+            else
+                TSPlayer.Server.SendMessage(DefaultMessage, color);
         }
         public static void SendMessage(int index, string DefaultMessage, byte r, byte g, byte b, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
             try
             {
-                if (Base.Config.MultiLanguageSupport)
+                if (Base.Config.MultiLanguageSupport && index >= 0)
                     switch (PlayerLanguage[index])
                     {
                         case Language.Portuguese:
@@ -150,8 +245,27 @@ namespace Hydra.Extensions
                             //Thrown NotImplementedException?
                             break;
                     }
+                else
+                    switch (Base.CurrentHydraLanguage)
+                    {
+                        case Language.Portuguese:
+                            DefaultMessage = PortugueseMessage == null ? DefaultMessage : PortugueseMessage;
+                            break;
+                        case Language.Spanish:
+                            DefaultMessage = SpanishMessage == null ? DefaultMessage : SpanishMessage;
+                            break;
+                        case Language.English:
+                            DefaultMessage = EnglishMessageIfNotDefault == null ? DefaultMessage : EnglishMessageIfNotDefault;
+                            break;
+                        default:
+                            //Thrown NotImplementedException?
+                            break;
+                    }
                 Color color = new Color(r, g, b);
-                TShockB.Players[index].SendMessage(DefaultMessage, color);
+                if (index >= 0)
+                    TShockB.Players[index].SendMessage(DefaultMessage, color);
+                else
+                    TSPlayer.Server.SendMessage(DefaultMessage, color);
             }
             catch (Exception ex) { Logger.doLog(ex.ToString(), Config.DebugLevel.Critical); }
         }
