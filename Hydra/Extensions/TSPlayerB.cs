@@ -152,7 +152,8 @@ namespace Hydra.Extensions
                     }
                 Color color = new Color(r, g, b);
                 TShockB.Players[index].SendMessage(DefaultMessage, color);
-            } catch (Exception ex) { Logger.doLog(ex.ToString(), Config.DebugLevel.Critical); }
+            }
+            catch (Exception ex) { Logger.doLog(ex.ToString(), Config.DebugLevel.Critical); }
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Hydra.Extensions
         public static TSPlayer[] Players { get; protected set; } = TShock.Players;
         public static void AllSendMessage(string DefaultMessage, Color color, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null, TSPlayer ignore = null)
         {
-            Parallel.ForEach(TShock.Players.Where(p => p != null && p != ignore && p.Active), tsplayer =>
+            Parallel.ForEach(TShock.Players.Where(p => p != null && p != ignore), tsplayer =>
             {
                 TSPlayerB.SendMessage(tsplayer.Index, DefaultMessage, color, PortugueseMessage, SpanishMessage, EnglishMessageIfNotDefault);
             });

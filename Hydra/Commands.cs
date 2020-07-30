@@ -7,9 +7,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.ID;
 using TShockAPI;
 using TShockAPI.DB;
 using TShockAPI.Hooks;
+using TShockAPI.Localization;
 
 namespace Hydra
 {
@@ -21,7 +23,9 @@ namespace Hydra
             "register",
             "password",
             "logout",
-            "login"
+            "login",
+            "give",
+            "help"
         };
         public static string Specifier = TShockAPI.Commands.Specifier;
         public static string SilentSpecifier = TShockAPI.Commands.SilentSpecifier;
@@ -76,8 +80,15 @@ namespace Hydra
             });
             TShockAPI.Commands.ChatCommands.Add(new Command(ChangeLanguage, "lang")
             {
-                AllowServer = false,
-                DoLog = true
+                AllowServer = true
+            });
+            TShockAPI.Commands.ChatCommands.Add(new Command(TShockAPI.Permissions.give, Give, "give", "daritem", "dararticulo", "daritem", "g", "dar")
+            {
+                HelpText = "Gives another player an item."
+            });
+            TShockAPI.Commands.ChatCommands.Add(new Command(Help, "help", "comandos", "ayuda", "cmds", "cmd")
+            {
+                HelpText = "Lists commands or gives help on them."
             });
             //TShockAPI.Commands.ChatCommands.Add(new Command(SetDefense, "def")
             //{
@@ -161,7 +172,116 @@ namespace Hydra
                                                             PortugueseMessage: "[Hydra] Sincronizado!",
                                                             SpanishMessage: "[Hydra] Sincronizado!");
         }
-        #region AccountVoids
+        #region General Commands
+
+        private static void Help(CommandArgs args)
+        {
+            if (args.Parameters.Count > 1)
+            {
+                args.Player.SendErrorMessage("Uso Correto: [c/ffd700:{0}comandos] [página]", Specifier);
+                return;
+            }
+
+            int pageNumber;
+            if (args.Parameters.Count == 0 || int.TryParse(args.Parameters[0], out pageNumber))
+            {
+                if (!PaginationTools.TryParsePageNumber(args.Parameters, 0, args.Player, out pageNumber))
+                {
+                    return;
+                }
+
+                int cmdIndex = (int)Base.CurrentHydraLanguage;
+                string headerformat = "Command List ({0}/{1}):";
+                string footerformat = $"Digite [c/ffd700:{0}comandos {{0}}] para ver mais.".SFormat(Specifier);
+                if (args.Player.Index >= 0)
+                    switch (TSPlayerB.PlayerLanguage[args.Player.Index])
+                    {
+                        case TSPlayerB.Language.English:
+                            headerformat = "Command List ({0}/{1}):";
+                            footerformat = $"Type [c/ffd700:{0}help {{0}}] for more.".SFormat(Specifier);
+                            cmdIndex = 0;
+                            break;
+                        case TSPlayerB.Language.Portuguese:
+                            headerformat = "Lista de Comandos ({0}/{1}):";
+                            footerformat = $"Digite [c/ffd700:{0}comandos {{0}}] para ver mais.".SFormat(Specifier);
+                            cmdIndex = 1;
+                            break;
+                        case TSPlayerB.Language.Spanish:
+                            headerformat = "Lista de Comandos ({0}/{1}):";
+                            footerformat = $"Escribe [c/ffd700:{0}ayuda {{0}}] para ver más.".SFormat(Specifier);
+                            cmdIndex = 2;
+                            break;
+                    }
+                else
+                    switch (Base.CurrentHydraLanguage)
+                    {
+                        case TSPlayerB.Language.English:
+                            headerformat = "Command List ({0}/{1}):";
+                            footerformat = $"Type [c/ffd700:{0}help {{0}}] for more.".SFormat(Specifier);
+                            break;
+                        case TSPlayerB.Language.Portuguese:
+                            headerformat = "Lista de Comandos ({0}/{1}):";
+                            footerformat = $"Digite [c/ffd700:{0}comandos {{0}}] para ver mais.".SFormat(Specifier);
+                            break;
+                        case TSPlayerB.Language.Spanish:
+                            headerformat = "Lista de Comandos ({0}/{1}):";
+                            footerformat = $"Escribe [c/ffd700:{0}ayuda {{0}}] para ver más.".SFormat(Specifier);
+                            break;
+                    }
+
+                IEnumerable<string> cmdNames = from cmd in TShockAPI.Commands.ChatCommands
+                                               where cmd.CanRun(args.Player) && (cmd.Name != "auth" || TShock.AuthToken != 0)
+                                               select (cmd.Names.Count() >= 3 ? Specifier + cmd.Names[cmdIndex] : Specifier + cmd.Name);
+
+                PaginationTools.SendPage(args.Player, pageNumber, PaginationTools.BuildLinesFromTerms(cmdNames),
+                    new PaginationTools.Settings
+                    {
+                        HeaderFormat = headerformat,
+                        FooterFormat = footerformat,
+                        HeaderTextColor = Color.Magenta,
+                        LineTextColor = Color.LightGray,
+                        FooterTextColor = Color.ForestGreen,
+                        MaxLinesPerPage = 3
+                    });
+            }
+            else
+            {
+                string commandName = args.Parameters[0].ToLower();
+                if (commandName.StartsWith(Specifier))
+                {
+                    commandName = commandName.Substring(1);
+                }
+
+                Command command = TShockAPI.Commands.ChatCommands.Find(c => c.Names.Contains(commandName));
+                if (command == null)
+                {
+                    TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: "Invalid Command.",
+                                                                  PortugueseMessage: "Comando inválido.",
+                                                                  SpanishMessage: "Comando inválido.");
+                    return;
+                }
+                if (!command.CanRun(args.Player))
+                {
+                    TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: "You do not have access to this command.",
+                                                                  PortugueseMessage: "Você não tem acesso a este comando.",
+                                                                  SpanishMessage: "No tienes acceso a este comando.");
+                    return;
+                }
+
+                args.Player.SendSuccessMessage("{0}{1} info: ", Specifier, command.Name);
+                if (command.HelpDesc == null)
+                {
+                    args.Player.SendInfoMessage(command.HelpText);
+                    return;
+                }
+                foreach (string line in command.HelpDesc)
+                {
+                    args.Player.SendInfoMessage(line);
+                }
+            }
+        }
+        #endregion
+        #region Account Commands
         private static void RegisterUser(CommandArgs args)
         {
             try
@@ -498,6 +618,135 @@ namespace Hydra
                                                               SpanishMessage: $"Hubo un error al procesar su solicitud.");
 
                 Logger.doLog(ex.ToString(), Config.DebugLevel.Critical);
+            }
+        }
+        #endregion
+        #region Item Commands
+        private static void Give(CommandArgs args)
+        {
+            if (args.Parameters.Count < 2)
+            {
+                TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Invalid syntax! Proper syntax: {Specifier}give <item type/id> <player> [item amount] [prefix id/name]",
+                                                              PortugueseMessage: $"Uso Correto: [c/ffd700:{Specifier}dar <nome do item/id> <jogador>] [quantidade] [prefix id/nome]",
+                                                              SpanishMessage: $"¡Sintaxis inválida! Sintaxis adecuada: [c/ffd700:{Specifier}dar-articulo <nombre del árticulo/id> <jogador>] [cantidad] [prefix id/nombre]");
+                return;
+            }
+            if (args.Parameters[0].Length == 0)
+            {
+                TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Missing item name/id.",
+                                                              PortugueseMessage: $"Você não especificou o Item.",
+                                                              SpanishMessage: $"No especificó el artículo.");
+                return;
+            }
+            if (args.Parameters[1].Length == 0)
+            {
+                TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Missing player name.",
+                                                              PortugueseMessage: $"Você não inseriu o nome do jogador.",
+                                                              SpanishMessage: $"No ingresaste el nombre del jugador.");
+                return;
+            }
+            int itemAmount = 0;
+            int prefix = 0;
+            var items = TShock.Utils.GetItemByIdOrName(args.Parameters[0]);
+            args.Parameters.RemoveAt(0);
+            string plStr = args.Parameters[0];
+            args.Parameters.RemoveAt(0);
+            if (args.Parameters.Count == 1)
+                int.TryParse(args.Parameters[0], out itemAmount);
+            if (items.Count == 0)
+            {
+                TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Invalid Item Type!",
+                                                              PortugueseMessage: $"Tipo de Item inválido!",
+                                                              SpanishMessage: $"Tipo de artículo inválido!");
+            }
+            else if (items.Count > 1)
+                TShock.Utils.SendMultipleMatchError(args.Player, items.Select(i => $"{i.Name}({i.netID})"));
+            else
+            {
+                var item = items[0];
+
+                if (args.Parameters.Count == 2)
+                {
+                    int.TryParse(args.Parameters[0], out itemAmount);
+                    var prefixIds = TShock.Utils.GetPrefixByIdOrName(args.Parameters[1]);
+                    if (item.accessory && prefixIds.Contains(PrefixID.Quick))
+                    {
+                        prefixIds.Remove(PrefixID.Quick);
+                        prefixIds.Remove(PrefixID.Quick2);
+                        prefixIds.Add(PrefixID.Quick2);
+                    }
+                    else if (!item.accessory && prefixIds.Contains(PrefixID.Quick))
+                        prefixIds.Remove(PrefixID.Quick2);
+                    if (prefixIds.Count == 1)
+                        prefix = prefixIds[0];
+                }
+
+                if (item.type >= 1 && item.type < Main.maxItemTypes)
+                {
+                    var players = TShock.Utils.FindPlayer(plStr);
+                    if (players.Count == 0)
+                        TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Invalid Player!",
+                                                                      PortugueseMessage: $"Jogador Inválido!",
+                                                                      SpanishMessage: $"Jugador inválido!");
+                    else if (players.Count > 1)
+                        TShock.Utils.SendMultipleMatchError(args.Player, players.Select(p => p.Name));
+                    else
+                    {
+                        var plr = players[0];
+                        Task.Run(() =>
+                        {
+                            GiveProcess(plr, item, itemAmount, prefix, args);
+                        });
+                    }
+                }
+                else
+                {
+                    TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Invalid Item Type!",
+                                                                  PortugueseMessage: $"Tipo de Item inválido!",
+                                                                  SpanishMessage: $"Tipo de artículo inválido!");
+                }
+            }
+        }
+        private static async Task GiveProcess(TSPlayer plr, Item item, int itemAmount, int prefix, CommandArgs args)
+        {
+            bool complete = false;
+            if (itemAmount == 0 || itemAmount > item.maxStack)
+                itemAmount = item.maxStack;
+            if (!plr.InventorySlotAvailable)
+                TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"Waiting for [c/5472C0:{plr.Name}] to free up inventory space...",
+                                                              PortugueseMessage: $"Aguardando [c/5472C0:{plr.Name}] liberar espaço no inventário...",
+                                                              SpanishMessage: $"Esperando a que [c/5472C0:{plr.Name}] libere espacio de inventario...");
+            while (!complete)
+            {
+                if (plr.InventorySlotAvailable || (item.type > 70 && item.type < 75) || item.ammo > 0 || item.type == 58 || item.type == 184)
+                {
+
+                    if (plr.GiveItemCheck(item.type, EnglishLanguage.GetItemNameById(item.type), item.width, item.height, itemAmount, prefix))
+                    {
+                        TSPlayerB.SendSuccessMessage(args.Player.Index, DefaultMessage: $"[c/5472C0:{plr.Name}] received [c/ffa500:{itemAmount}] [c/ffd700:{item.Name}]",
+                                                                        PortugueseMessage: $"[c/5472C0:{plr.Name}] recebeu [c/ffa500:{itemAmount}] [c/ffd700:{item.Name}]",
+                                                                        SpanishMessage: $"[c/5472C0:{plr.Name}] recebido [c/ffa500:{itemAmount}] [c/ffd700:{item.Name}]");
+
+                        TSPlayerB.SendSuccessMessage(plr.Index, DefaultMessage: $"[c/5472C0:{args.Player.Name}] gave to you [c/ffa500:{itemAmount}] [c/ffd700:{item.Name}]",
+                                                                PortugueseMessage: $"[c/5472C0:{args.Player.Name}] deu a você [c/ffa500:{itemAmount}] [c/ffd700:{item.Name}]",
+                                                                SpanishMessage: $"[c/5472C0:{args.Player.Name}] te dio [c/ffa500:{itemAmount}] [c/ffd700:{item.Name}]");
+                        complete = true;
+                    }
+                    else
+                    {
+                        TSPlayerB.SendErrorMessage(args.Player.Index, DefaultMessage: $"You cannot spawn banned items.",
+                                                                      PortugueseMessage: $"Você não pode criar itens banidos.",
+                                                                      SpanishMessage: $"No puedes generar elementos prohibidos.");
+                        complete = true;
+                    }
+                }
+                else
+                {
+                    TSPlayerB.SendErrorMessage(plr.Index, DefaultMessage: $"[c/5472C0:{args.Player.Name}] tried to give you [c/ffa500:{itemAmount}] [c/ffd700:{item.Name}] but your inventory was full.\nFree up space in your inventory to receive the Item.",
+                                                          PortugueseMessage: $"[c/5472C0:{args.Player.Name}] tentou dar a você [c/ffa500:{itemAmount}] [c/ffd700:{item.Name}] mas seu inventário estava cheio.\nLibere espaço em seu inventário para receber o Item.",
+                                                          SpanishMessage: $"[c/5472C0:{args.Player.Name}] trató de darte [c/ffa500:{itemAmount}] [c/ffd700:{item.Name}] pero tu inventario estaba lleno.\nLibere espacio en su inventario para recibir el artículo.");
+                }
+                await Task.Delay(10000);
             }
         }
         #endregion
