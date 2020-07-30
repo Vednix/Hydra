@@ -14,8 +14,9 @@ namespace Hydra
 {
     public class Base
     {
-        public static readonly Version Version = new Version(1, 0, 10, 5);
+        public static readonly Version Version = new Version(1, 0, 10, 7);
         public static readonly string SavePath = Path.Combine(TShock.SavePath, "Hydra");
+        public static TSPlayerB.Language CurrentHydraLanguage { get; set; }
         public static Config Config;
         public static bool isDisposed { get; set; } = false;
         public static int ModulesLoaded { get; set; } = 0;

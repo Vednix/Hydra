@@ -45,17 +45,11 @@ namespace Hydra
             player.Country = player.Country == "??" || player.Country == "N/A" ? (GetUserCountryByIp(player.IP) == "N/A" ? "N/A" : CachedCountry) : player.Country;
             if (player.IP.StartsWith("192.168") || player.IP.StartsWith("10.0") || player.IP == "127.0")
             {
-                TSPlayerB.PlayerLanguage[player.Index] = (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultHydraLanguage);
+                TSPlayerB.PlayerLanguage[player.Index] = Base.CurrentHydraLanguage;
                 player.Country = "Localhost";
             }
             else
             {
-                //if (Base.Config.PortugueseCNCC.Where(p => p.ToLowerInvariant().Contains(player.Country.ToLowerInvariant())).ToString().Count() >= 1)
-                //    TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.Portuguese;
-                //else if (Base.Config.EnglishCNCC.Where(p => p.ToLowerInvariant().Contains(player.Country.ToLowerInvariant())).ToString().Count() >= 1)
-                //    TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
-                //else if (Base.Config.SpanishCNCC.Where(p => p.ToLowerInvariant().Contains(player.Country.ToLowerInvariant())).ToString().Count() >= 1)
-                //    TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.Spanish;
                 if (Base.Config.PortugueseCNCC.Contains(player.Country.ToLowerInvariant()))
                     TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.Portuguese;
                 else if (Base.Config.EnglishCNCC.Contains(player.Country.ToLowerInvariant()))

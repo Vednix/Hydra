@@ -79,11 +79,11 @@ namespace Hydra
                 AllowServer = false,
                 DoLog = true
             });
-            TShockAPI.Commands.ChatCommands.Add(new Command(SetDefense, "def")
-            {
-                AllowServer = false,
-                DoLog = true
-            });
+            //TShockAPI.Commands.ChatCommands.Add(new Command(SetDefense, "def")
+            //{
+            //    AllowServer = false,
+            //    DoLog = true
+            //});
             #endregion
         }
         private static void SetDefense(CommandArgs args)
@@ -451,7 +451,7 @@ namespace Hydra
                                                              PortugueseMessage: $"Autenticado com sucesso ao usuário [c/5472C0:{user.Name}].",
                                                              SpanishMessage: $"Autenticada con éxito a la usuaria [c/5472C0:{user.Name}].");
 
-                    Logger.doLogLang(DefaultMessage: $"'{args.Player.Name}' authenticated successfully as user '{user.Name}'", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultPlayerLanguage),
+                    Logger.doLogLang(DefaultMessage: $"'{args.Player.Name}' authenticated successfully as user '{user.Name}'", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultHydraLanguage),
                                      PortugueseMessage: $"'{args.Player.Name}' autenticou-se com sucesso com o usuário '{user.Name}'",
                                      SpanishMessage: $"'{args.Player.Name}' autenticado exitosamente como usuario '{user.Name}'");
 

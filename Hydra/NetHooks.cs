@@ -8,16 +8,11 @@ using System.Threading.Tasks;
 using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
-using Utils = TShockAPI.Utils;
 
 namespace Hydra
 {
     public class NetHooks
     {
-        public static void OnGreetPlayerDS(GreetPlayerEventArgs args)
-        {
-            Console.WriteLine("[Hydra] NetHooks / OnGreetPlayerDS => Try Dispose TShock OnGreet");
-        }
         public static void OnGetData(GetDataEventArgs e)
         {
             if (e == null || Base.isDisposed || e.Handled)
@@ -32,20 +27,92 @@ namespace Hydra
             switch (e.MsgID)
             {
                 case PacketTypes.ItemOwner:
-                    {
-                        int itemIndex = BitConverter.ToInt16(e.Msg.readBuffer, e.Index);
-                        int newOwnerPlayerIndex = e.Msg.readBuffer[e.Index + 2];
-                        if (itemIndex == 400)
-                        {
-                            if (newOwnerPlayerIndex == 16)
-                                TSPlayerB.isMobile[e.Msg.whoAmI] = true;
-                            else
-                                TSPlayerB.isMobile[e.Msg.whoAmI] = false;
-                        }
-                        break;
-                    }
+                    int itemIndex = BitConverter.ToInt16(e.Msg.readBuffer, e.Index);
+                    int newOwnerPlayerIndex = e.Msg.readBuffer[e.Index + 2];
+                    if (itemIndex == 400)
+                        if (newOwnerPlayerIndex == 16)
+                            TSPlayerB.isMobile[e.Msg.whoAmI] = true;
+                        else
+                            TSPlayerB.isMobile[e.Msg.whoAmI] = false;
+                    break;
+                case PacketTypes.ContinueConnecting2:
+                    e.Handled = HandleConnecting(TShockB.Players[e.Msg.whoAmI]);
+                    break;
             }
         }
+        #region HandleConnecting / ContinueConnecting2
+        private static bool HandleConnecting(TSPlayer Player)
+        {
+            var user = TShock.Users.GetUserByName(Player.Name);
+            Player.DataWhenJoined = new PlayerData(Player);
+            Player.DataWhenJoined.CopyCharacter(Player);
+
+            if (user != null && !TShock.Config.DisableUUIDLogin)
+            {
+                if (user.UUID == Player.UUID)
+                {
+                    if (Player.State == 1)
+                        Player.State = 2;
+                    NetMessage.SendData((int)PacketTypes.WorldInfo, Player.Index, -1, "");
+
+                    Player.PlayerData = TShock.CharacterDB.GetPlayerData(Player, user.ID);
+
+                    var group = TShock.Utils.GetGroup(user.Group);
+
+                    Player.Group = group;
+                    Player.tempGroup = null;
+                    Player.User = user;
+                    Player.IsLoggedIn = true;
+                    Player.IgnoreActionsForInventory = "none";
+
+                    if (Main.ServerSideCharacter)
+                    {
+                        if (Player.HasPermission(TShockAPI.Permissions.bypassssc))
+                        {
+                            Player.PlayerData.CopyCharacter(Player);
+                            TShock.CharacterDB.InsertPlayerData(Player);
+                        }
+                        Player.PlayerData.RestoreCharacter(Player);
+                    }
+                    Player.LoginFailsBySsi = false;
+
+                    if (Player.HasPermission(TShockAPI.Permissions.ignorestackhackdetection))
+                        Player.IgnoreActionsForCheating = "none";
+
+                    if (Player.HasPermission(TShockAPI.Permissions.usebanneditem))
+                        Player.IgnoreActionsForDisabledArmor = "none";
+
+                    Logger.doLogLang(DefaultMessage: $"'{Player.Name}' authenticated successfully as user '{user.Name}'", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultHydraLanguage),
+                                     PortugueseMessage: $"'{Player.Name}' autenticou-se com sucesso com o usuário '{user.Name}'",
+                                     SpanishMessage: $"'{Player.Name}' autenticado exitosamente como usuario '{user.Name}'");
+                    TShockAPI.Hooks.PlayerHooks.OnPlayerPostLogin(Player);
+                    return true;
+                }
+            }
+            else if (user != null && !TShock.Config.DisableLoginBeforeJoin)
+            {
+                Player.RequiresPassword = true;
+                NetMessage.SendData((int)PacketTypes.PasswordRequired, Player.Index, -1, "");
+                return true;
+            }
+            else if (!string.IsNullOrEmpty(TShock.Config.ServerPassword))
+            {
+                Player.RequiresPassword = true;
+                NetMessage.SendData((int)PacketTypes.PasswordRequired, Player.Index, -1, "");
+                return true;
+            }
+
+            if (Player.State == 1)
+                Player.State = 2;
+            NetMessage.SendData((int)PacketTypes.WorldInfo, Player.Index, -1, "");
+
+            return true;
+        }
+        internal static void PostHandleConnecting(TSPlayer Player)
+        {
+
+        }
+        #endregion
         #region GreetPlayerEventArgs
         public static void OnGreetPlayer(GreetPlayerEventArgs args)
         {
@@ -71,7 +138,7 @@ namespace Hydra
                                        PortugueseMessage: $"{playername}{country} entrou no servidor {via}! [{TSPlayerB.PlayerLanguage[player.Index]}]",
                                        SpanishMessage: $"{playername}{country} entró al servidor {(via.Contains("(via PC)") ? "[c/ff4500:(a través de PC)]" : "[c/ff198d:(vía teléfono móvil)]")}! [{TSPlayerB.PlayerLanguage[player.Index]}]", ignore: player);
 
-            Logger.doLogLang(DefaultMessage: $"{player.Name}{country} has joined the server {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultHydraLanguage),
+            Logger.doLogLang(DefaultMessage: $"{player.Name}{country} has joined the server {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!", Config.DebugLevel.Info, Base.CurrentHydraLanguage,
                              PortugueseMessage: $"{player.Name}{country} entrou no servidor {(TSPlayerB.isMobile[player.Index] ? "(via Mobile)" : "(via PC)")}!",
                              SpanishMessage: $"{player.Name}{country} entró al servidor {(TSPlayerB.isMobile[player.Index] ? "(vía teléfono móvil)" : "(a través de PC)")}!");
 
@@ -150,7 +217,7 @@ namespace Hydra
                                            SpanishMessage: $"{playername} dejó el servidor.");
                 }
 
-                Logger.doLogLang(DefaultMessage: $"{tsplr.Name} has left the server.", Config.DebugLevel.Info, (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultHydraLanguage),
+                Logger.doLogLang(DefaultMessage: $"{tsplr.Name} has left the server.", Config.DebugLevel.Info, Base.CurrentHydraLanguage,
                                  PortugueseMessage: $"{tsplr.Name} saiu do servidor.",
                                  SpanishMessage: $"{tsplr.Name} dejó el servidor.");
 

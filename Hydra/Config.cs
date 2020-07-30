@@ -99,10 +99,6 @@ namespace Hydra
                 if (!Directory.Exists(Base.Config.logPath))
                     Directory.CreateDirectory(Base.Config.logPath);
 
-                Base.Config.PortugueseCNCC = Base.Config.PortugueseCNCC.Select(p => p.ToLowerInvariant()).ToArray();
-                Base.Config.EnglishCNCC = Base.Config.EnglishCNCC.Select(p => p.ToLowerInvariant()).ToArray();
-                Base.Config.SpanishCNCC = Base.Config.SpanishCNCC.Select(p => p.ToLowerInvariant()).ToArray();
-
                 Logger.doLog("Hydra configuration has been loaded successfully!", DebugLevel.Info);
             }
             catch (Exception e)
@@ -118,6 +114,11 @@ namespace Hydra
                 Logger.doLog($"There was an error loading the Hydra configuration file, using default configuration. => {e.Message}", DebugLevel.Critical);
                 Return = false;
             }
+
+            Base.Config.PortugueseCNCC = Base.Config.PortugueseCNCC.Select(p => p.ToLowerInvariant()).ToArray();
+            Base.Config.EnglishCNCC = Base.Config.EnglishCNCC.Select(p => p.ToLowerInvariant()).ToArray();
+            Base.Config.SpanishCNCC = Base.Config.SpanishCNCC.Select(p => p.ToLowerInvariant()).ToArray();
+            Base.CurrentHydraLanguage = (TSPlayerB.Language)Enum.Parse(typeof(TSPlayerB.Language), Base.Config.DefaultHydraLanguage);
             return Return;
         }
         internal static Config ValidLang(Config config)
