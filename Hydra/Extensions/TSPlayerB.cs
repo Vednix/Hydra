@@ -267,7 +267,7 @@ namespace Hydra.Extensions
                 else
                     TSPlayer.Server.SendMessage(DefaultMessage, color);
             }
-            catch (Exception ex) { Logger.doLog(ex.ToString(), Config.DebugLevel.Critical); }
+            catch (Exception ex) { Logger.doLog(ex.ToString(), Config.DebugLevel.Critical, Base.Name); }
         }
 
         /// <summary>

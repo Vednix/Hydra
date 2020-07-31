@@ -23,6 +23,7 @@ namespace Hydra
             All = 3,
             Unsecure = 4
         }
+        public bool Enabled = true;
         public static readonly bool isMobileServer = Main.maxPlayers == 16 ? true : false;
         public bool EnhanceCommands = true;
         public bool ShowHydraMotd = true;
@@ -99,7 +100,7 @@ namespace Hydra
                 if (!Directory.Exists(Base.Config.logPath))
                     Directory.CreateDirectory(Base.Config.logPath);
 
-                Logger.doLog("Hydra configuration has been loaded successfully!", DebugLevel.Info);
+                Logger.doLog("Configuration has been loaded successfully!", DebugLevel.Info, Base.Name);
             }
             catch (Exception e)
             {
@@ -107,11 +108,11 @@ namespace Hydra
 
                 if (FirstLoad)
                 {
-                    Logger.WriteLine($"There was an critical error loading the Hydra configuration file, using default configuration. => {e}", ConsoleColor.DarkRed);
+                    Logger.WriteLine($"[{Base.Name}] There was a critical error loading the Hydra configuration file, using default configuration. => {e}", ConsoleColor.DarkRed);
                     Console.ReadKey();
                     Environment.Exit(-1);
                 }
-                Logger.doLog($"There was an error loading the Hydra configuration file, using default configuration. => {e.Message}", DebugLevel.Critical);
+                Logger.doLog($"There was an error loading the Hydra configuration file, using default configuration. => {e.Message}", DebugLevel.Critical, Base.Name);
                 Return = false;
             }
 

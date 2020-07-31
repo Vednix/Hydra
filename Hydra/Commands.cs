@@ -617,7 +617,7 @@ namespace Hydra
                                                               PortugueseMessage: $"Houve um erro ao processar seu pedido.",
                                                               SpanishMessage: $"Hubo un error al procesar su solicitud.");
 
-                Logger.doLog(ex.ToString(), Config.DebugLevel.Critical);
+                Logger.doLog(ex.ToString(), Config.DebugLevel.Critical, Base.Name);
             }
         }
         #endregion

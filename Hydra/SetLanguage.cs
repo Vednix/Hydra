@@ -64,9 +64,9 @@ namespace Hydra
                     catch (ArgumentException ex)
                     {
                         if (Base.Config.debugLevel <= Config.DebugLevel.Info)
-                            Logger.doLog("Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language", Config.DebugLevel.Info);
+                            Logger.doLog("Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language", Config.DebugLevel.Info, Base.Name);
                         else
-                            Logger.doLog($"Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language => Details: {ex}", Config.DebugLevel.Error);
+                            Logger.doLog($"Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language => Details: {ex}", Config.DebugLevel.Error, Base.Name);
                         TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
                     }
             }
@@ -78,9 +78,9 @@ namespace Hydra
                 catch (ArgumentException ex)
                 {
                     if (Base.Config.debugLevel <= Config.DebugLevel.Info)
-                        Logger.doLog("Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language", Config.DebugLevel.Info);
+                        Logger.doLog("Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language", Config.DebugLevel.Info, Base.Name);
                     else
-                        Logger.doLog($"Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language => Details: {ex}", Config.DebugLevel.Error);
+                        Logger.doLog($"Incorrect DefaultLanguage in Hydra ConfigFile, using default Hydra language => Details: {ex}", Config.DebugLevel.Error, Base.Name);
                     TSPlayerB.PlayerLanguage[player.Index] = TSPlayerB.Language.English;
                 }
             TSPlayerB.HCountry[player.Index] = player.Country;

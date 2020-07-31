@@ -11,34 +11,32 @@ namespace Hydra.Initializer
     public class Plugin : TerrariaPlugin
     {
         public override Version Version => Base.Version;
-        public override string Name
-        {
-            get { return "Hydra Initializer"; }
-        }
-
-        public override string Author
-        {
-            get { return "Vednix"; }
-        }
+        public override string Name => Base.Name;
+        public override string Author => Base.Author;
         public Plugin(Main game) : base(game)
         {
             Order = 0;
-            Base.game = game;
+            Base.game = game; //maybe useful
         }
         internal static bool Wait = false;
         public override void Initialize()
         {
-            ServerApi.Hooks.NetGetData.Register(this, NetHooks.OnGetData);
-            ServerApi.Hooks.ServerJoin.Register(this, SetLanguage.OnJoin);
-            ServerApi.Hooks.ServerLeave.Register(this, NetHooks.OnLeave);
-            ServerApi.Hooks.NetGreetPlayer.Register(this, NetHooks.OnGreetPlayer);
-            ServerApi.Hooks.GameInitialize.Register(this, Base.OnHydraInitialize);
-            ServerApi.Hooks.GamePostInitialize.Register(this, Base.OnHydraPostInitialize);
-            ServerApi.Hooks.ServerChat.Register(this, NetHooks.OnChat);
-            GeneralHooks.ReloadEvent += Hydra.Config.OnReloadEvent;
+            if (Base.isHydraEnabled())
+            {
+                ServerApi.Hooks.NetGetData.Register(this, NetHooks.OnGetData);
+                ServerApi.Hooks.ServerJoin.Register(this, SetLanguage.OnJoin);
+                ServerApi.Hooks.ServerLeave.Register(this, NetHooks.OnLeave);
+                ServerApi.Hooks.NetGreetPlayer.Register(this, NetHooks.OnGreetPlayer);
+                ServerApi.Hooks.GameInitialize.Register(this, Base.OnHydraInitialize, 10);
+                ServerApi.Hooks.GamePostInitialize.Register(this, Base.OnHydraPostInitialize);
+                ServerApi.Hooks.ServerChat.Register(this, NetHooks.OnChat);
+                GeneralHooks.ReloadEvent += Hydra.Config.OnReloadEvent;
+            }
+            else Base.isDisposed = true;
         }
         protected override void Dispose(bool disposing)
         {
+            if (!Base.isDisposed) return;
             if (disposing)
             {
                 ServerApi.Hooks.NetGetData.Deregister(this, NetHooks.OnGetData);

@@ -22,7 +22,7 @@ namespace Hydra
             if (player == null)
                 return;
 
-            Logger.doLog(e.MsgID.ToString(), Config.DebugLevel.Unsecure);
+            Logger.doLog(e.MsgID.ToString(), Config.DebugLevel.Unsecure, Base.Name);
 
             switch (e.MsgID)
             {
@@ -53,7 +53,7 @@ namespace Hydra
                 {
                     if (Player.State == 1)
                         Player.State = 2;
-                    NetMessage.SendData((int)PacketTypes.WorldInfo, Player.Index, -1, "");
+                    NetMessage.SendData((int)PacketTypes.WorldInfo, Player.Index, -1, Terraria.Localization.NetworkText.Empty);
 
                     Player.PlayerData = TShock.CharacterDB.GetPlayerData(Player, user.ID);
 
@@ -92,19 +92,19 @@ namespace Hydra
             else if (user != null && !TShock.Config.DisableLoginBeforeJoin)
             {
                 Player.RequiresPassword = true;
-                NetMessage.SendData((int)PacketTypes.PasswordRequired, Player.Index, -1, "");
+                NetMessage.SendData((int)PacketTypes.PasswordRequired, Player.Index, -1, Terraria.Localization.NetworkText.Empty);
                 return true;
             }
             else if (!string.IsNullOrEmpty(TShock.Config.ServerPassword))
             {
                 Player.RequiresPassword = true;
-                NetMessage.SendData((int)PacketTypes.PasswordRequired, Player.Index, -1, "");
+                NetMessage.SendData((int)PacketTypes.PasswordRequired, Player.Index, -1, Terraria.Localization.NetworkText.Empty);
                 return true;
             }
 
             if (Player.State == 1)
                 Player.State = 2;
-            NetMessage.SendData((int)PacketTypes.WorldInfo, Player.Index, -1, "");
+            NetMessage.SendData((int)PacketTypes.WorldInfo, Player.Index, -1, Terraria.Localization.NetworkText.Empty);
 
             return true;
         }

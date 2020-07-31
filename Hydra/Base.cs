@@ -14,22 +14,31 @@ namespace Hydra
 {
     public class Base
     {
-        public static readonly Version Version = new Version(1, 0, 10, 11);
+        public static readonly Version Version = new Version(1, 0, 11, 2);
+        public static readonly string Name = "Hydra";
+        public static readonly string Author = "Vednix";
+        public static readonly string Description = "Vednix";
         public static readonly string SavePath = Path.Combine(TShock.SavePath, "Hydra");
         public static TSPlayerB.Language CurrentHydraLanguage { get; set; }
         public static Config Config;
         public static bool isDisposed { get; set; } = false;
         public static int ModulesLoaded { get; set; } = 0;
         public static Main game = new Main();
-        public static void OnHydraInitialize(EventArgs args)
+        public static bool isHydraEnabled()
         {
             Config.Read(true);
-
+            if (!Config.Enabled)
+                Console.WriteLine("Hydra Disabled");
+            return Config.Enabled;
+        }
+        public static void OnHydraInitialize(EventArgs args)
+        {
             Assembly[] assems = AppDomain.CurrentDomain.GetAssemblies();
             foreach (Assembly a in assems)
                 if (a.FullName.StartsWith("Hydra.") && !a.FullName.Contains("Hydra.Initializer"))
                     ModulesLoaded++;
-            Logger.doLog($"Loaded {ModulesLoaded} Hydra Modules.", Config.DebugLevel.Info);
+            if (Config.debugLevel >= Config.DebugLevel.All)
+                Logger.doLog($"Loaded {ModulesLoaded} Modules.", Config.DebugLevel.Info, Base.Name);
         }
         public static void OnHydraPostInitialize(EventArgs args)
         {

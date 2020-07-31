@@ -28,30 +28,30 @@ namespace Hydra.Extensions
             Console.Write(toWrite);
             Console.ResetColor();
         }
-        public static void doLog(string message, Config.DebugLevel level)
+        public static void doLog(string message, Config.DebugLevel level, string ModuleName = null)
         {
             string toLog = "";
             ConsoleColor color = ConsoleColor.White;
             switch (level)
             {
                 case Config.DebugLevel.All:
-                    toLog = $"[{DateTimeNow}] [DEBUG] {message}";
+                    toLog = $"[{DateTimeNow}] [DEBUG]{(ModuleName == null ? string.Empty : $" [in {ModuleName}]")} {message}";
                     color = ConsoleColor.DarkCyan;
                     break;
                 case Config.DebugLevel.Info:
-                    toLog = $"[{DateTimeNow}] [INFO] {message}";
+                    toLog = $"[{DateTimeNow}] [INFO]{(ModuleName == null ? string.Empty : $" [in {ModuleName}]")} {message}";
                     color = ConsoleColor.DarkYellow;
                     break;
                 case Config.DebugLevel.Error:
-                    toLog = $"[{DateTimeNow}] [ERROR] {message}";
+                    toLog = $"[{DateTimeNow}] [ERROR]{(ModuleName == null ? string.Empty : $" [in {ModuleName}]")} {message}";
                     color = ConsoleColor.Red;
                     break;
                 case Config.DebugLevel.Critical:
-                    toLog = $"[{DateTimeNow}] [CRITICAL] {message}";
+                    toLog = $"[{DateTimeNow}] [CRITICAL]{(ModuleName == null ? string.Empty : $" [in {ModuleName}]")} {message}";
                     color = ConsoleColor.DarkRed;
                     break;
                 case Config.DebugLevel.Unsecure:
-                    toLog = $"[{DateTimeNow}] [UNSECURE] {message}";
+                    toLog = $"[{DateTimeNow}] [UNSECURE]{(ModuleName == null ? string.Empty : $" [in {ModuleName}]")} {message}";
                     color = ConsoleColor.DarkMagenta;
                     if ((int)level <= (int)Base.Config.debugLevel)
                         WriteLine(toLog, color);
@@ -73,7 +73,7 @@ namespace Hydra.Extensions
             }
             finally { loglocker.Release(); }
         }
-        public static void doLogLang(string DefaultMessage, Config.DebugLevel level, TSPlayerB.Language language, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
+        public static void doLogLang(string DefaultMessage, Config.DebugLevel level, TSPlayerB.Language language, string ModuleName = null, string PortugueseMessage = null, string SpanishMessage = null, string EnglishMessageIfNotDefault = null)
         {
             string toLog = "";
             ConsoleColor color = ConsoleColor.White;
@@ -95,23 +95,23 @@ namespace Hydra.Extensions
             switch (level)
             {
                 case Config.DebugLevel.All:
-                    toLog = $"[{DateTimeNow}] [DEBUG] {DefaultMessage}";
+                    toLog = $"[{DateTimeNow}] [DEBUG]{(ModuleName == null ? string.Empty : $" [in {ModuleName}]")} {DefaultMessage}";
                     color = ConsoleColor.DarkCyan;
                     break;
                 case Config.DebugLevel.Info:
-                    toLog = $"[{DateTimeNow}] [INFO] {DefaultMessage}";
+                    toLog = $"[{DateTimeNow}] [INFO]{(ModuleName == null ? string.Empty : $" [in {ModuleName}]")} {DefaultMessage}";
                     color = ConsoleColor.DarkYellow;
                     break;
                 case Config.DebugLevel.Error:
-                    toLog = $"[{DateTimeNow}] [ERROR] {DefaultMessage}";
+                    toLog = $"[{DateTimeNow}] [ERROR]{(ModuleName == null ? string.Empty : $" [in {ModuleName}]")} {DefaultMessage}";
                     color = ConsoleColor.Red;
                     break;
                 case Config.DebugLevel.Critical:
-                    toLog = $"[{DateTimeNow}] [CRITICAL] {DefaultMessage}";
+                    toLog = $"[{DateTimeNow}] [CRITICAL]{(ModuleName == null ? string.Empty : $" [in {ModuleName}]")} {DefaultMessage}";
                     color = ConsoleColor.DarkRed;
                     break;
                 case Config.DebugLevel.Unsecure:
-                    toLog = $"[{DateTimeNow}] [UNSECURE] {DefaultMessage}";
+                    toLog = $"[{DateTimeNow}] [UNSECURE]{(ModuleName == null ? string.Empty : $" [in {ModuleName}]")} {DefaultMessage}";
                     color = ConsoleColor.DarkMagenta;
                     if ((int)level <= (int)Base.Config.debugLevel)
                         WriteLine(toLog, color);
