@@ -14,7 +14,7 @@ namespace Hydra
 {
     public class Base
     {
-        public static readonly Version Version = new Version(1, 0, 11, 2);
+        public static readonly Version Version = new Version(1, 0, 11, 3);
         public static readonly string Name = "Hydra";
         public static readonly string Author = "Vednix";
         public static readonly string Description = "Vednix";

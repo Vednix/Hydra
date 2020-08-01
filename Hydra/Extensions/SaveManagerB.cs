@@ -19,7 +19,7 @@ namespace Hydra.Extensions
 		private SaveManagerB()
 		{
 			_saveThread = new Thread(SaveWorker);
-			_saveThread.Name = "TShock SaveManager Worker";
+			_saveThread.Name = "Hydra_TShock SaveManager Worker";
 			_saveThread.Start();
 		}
 		public static SaveManagerB Instance { get { return instance; } }
@@ -42,14 +42,16 @@ namespace Hydra.Extensions
 				// These can be caused by an unexpected error such as a bad or out of date plugin
 				try
 				{
-					TShock.Log.ConsoleInfo("Salvando Mundo. Lag momentâneo poderá ser notado durante alguns segundos.");
-					TShock.AllSendMessagev2("Salvando Mundo. Lag momentâneo poderá ser notado durante alguns segundos.",
-											"Saving World...", Color.DarkSeaGreen);
+					Logger.doLogLang(DefaultMessage: "Saving the World. Momentary lag may be noticed for a few seconds.", Config.DebugLevel.All, Base.CurrentHydraLanguage, Base.Name,
+								   	 PortugueseMessage: "Salvando Mundo. Lag momentâneo poderá ser notado durante alguns segundos.",
+								 	 SpanishMessage: "Salvando al mundo. El retraso momentáneo puede notarse durante unos segundos.");
+					TShockB.AllSendMessage(DefaultMessage: "Saving the World. Momentary lag may be noticed for a few seconds.", Color.DarkSeaGreen,
+										   PortugueseMessage: "Salvando Mundo. Lag momentâneo poderá ser notado durante alguns segundos.",
+										   SpanishMessage: "Salvando al mundo. El retraso momentáneo puede notarse durante unos segundos.");
 				}
 				catch (Exception ex)
 				{
-					TShock.Log.Error("World saved notification failed");
-					TShock.Log.Error(ex.ToString());
+					Logger.doLog($"World saved notification failed.\n{ex.Message}", Config.DebugLevel.Error, Base.Name);
 				}
 			}
 		}
@@ -119,17 +121,19 @@ namespace Hydra.Extensions
 								}
 								else
 									WorldFile.saveWorld(task.resetTime);
-								TShock.Log.ConsoleInfo("Mapa Salvo");
-								TShock.AllSendMessagev2("Mapa Salvo",
-														"World Saved", Color.SeaGreen);
+
+								Logger.doLogLang(DefaultMessage: "World Saved.", Config.DebugLevel.Info, Base.CurrentHydraLanguage, Base.Name,
+													PortugueseMessage: "Mundo Salvo.",
+												  SpanishMessage: "Mundo Salvado.");
+								TShockB.AllSendMessage(DefaultMessage: "World Saved.", Color.SeaGreen,
+													   PortugueseMessage: "Mundo Salvo.",
+													   SpanishMessage: "Mundo Salvado.");
+							
 								TShock.Log.Info(string.Format("World saved at ({0})", Main.worldPathName));
 							}
-							catch (Exception e)
+							catch (Exception ex)
 							{
-								TShock.AllSendMessagev2("O salvamento do mapa falhou",
-														"World saved failed", Color.Red);
-								TShock.Log.Error("World saved failed");
-								TShock.Log.Error(e.ToString());
+								Logger.doLog($"World save failed.\n{ex}", Config.DebugLevel.Critical, Base.Name);
 							}
 						}
 					}
